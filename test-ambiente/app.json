@@ -7,22 +7,39 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/assets/image/icone.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#202124"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/*",
+      "path/to/expo-fonts.js"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.madrugao.testambiente"
+      "package": "com.madrugao.testambiente",
+      "runtimeVersion": "1.0.0",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "mimeType": "application/pdf"
+          },
+          "category": [
+            "CATEGORY_DEFAULT"
+          ],
+          "priority": 1
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,6 +49,10 @@
         "projectId": "4b011af6-57f9-4758-9809-dfb3faa2abb2"
       }
     },
-    "owner": "madrugao"
+    "owner": "madrugao",
+    "updates": {
+      "url": "https://u.expo.dev/4b011af6-57f9-4758-9809-dfb3faa2abb2",
+      "fallbackToCacheTimeout": 0
+    }
   }
 }
