@@ -20,7 +20,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
   /////////////////// controle modal/////////////////////////
   const [modalVisible, setModalVisible] = useState(false);
   //quantidade de itens no modal 
-  const [quantity, setQuantity] = useState(1); 
+  const [quantity, setQuantity] = useState(0); 
   /////////////estado inicial de itens CUSTOM///////////////
   const inicial_itens_custom:any = undefined
  
@@ -468,7 +468,8 @@ const adicionar_retirar = (props: adicionar_comp) => {
               <TouchableOpacity style={styles.button} onPress={() => {
                 setModalVisible(false)
                 setInicial_state_custom(inicial_itens_custom)
-                add_retirar === 0 ? setCheckbox1(false):null
+                console.log(add_retirar)
+                props.adicionar_pedido.length === 0 ?setCheckbox1(false):null
               }}>
                 <Text style={styles.buttonText}>Cancelar</Text>
               </TouchableOpacity>
