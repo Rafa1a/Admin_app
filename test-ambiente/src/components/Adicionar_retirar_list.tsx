@@ -468,6 +468,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
               <TouchableOpacity style={styles.button} onPress={() => {
                 setModalVisible(false)
                 setInicial_state_custom(inicial_itens_custom)
+                add_retirar === 0 ? setCheckbox1(false):null
               }}>
                 <Text style={styles.buttonText}>Cancelar</Text>
               </TouchableOpacity>

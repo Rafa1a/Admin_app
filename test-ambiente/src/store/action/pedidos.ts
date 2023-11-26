@@ -6,7 +6,6 @@ import { Dispatch } from 'redux'
 import { db } from '../auth';
 
 import { collection,doc,onSnapshot,getDocs,query, where, updateDoc, deleteDoc, arrayRemove} from "firebase/firestore"; 
-// import notifee, { AndroidImportance } from '@notifee/react-native';
 import { setMessage } from './message';
 import { fetchuser_get } from './user';
 import { ItemProps } from '../../interface/inter';
@@ -242,25 +241,35 @@ export const setTotal_Valor = (total:number) => {
 }
 
 /////////////////notificacao ///////////////////////////////////
-// async function onDisplayNotification() {
-//     // Request permissions (required for iOS)
-//     await notifee.requestPermission()
+import * as Notifications from 'expo-notifications';
 
-//     // Create a channel (required for Android)
-//     const channelId = await notifee.createChannel({
-//       id: 'default',
-//       name: 'Default Channel',
-//       vibration:true,
-//       importance: AndroidImportance.HIGH
-//     });
+async function onDisplayNotification() {
+  try {
+    // Solicitar permissões (necessário para iOS)
+    await Notifications.requestPermissionsAsync();
 
-//     // Display a notification
-//     await notifee.displayNotification({
-//       title: 'Novo Pedido',
-//       body: 'Vamos começar !',
-//       android: {channelId},
-//     });
-//   }
+    // Criar um canal (necessário para Android)
+    const channelId = 'default';
+    await Notifications.setNotificationChannelAsync(channelId, {
+      name: 'Default Channel',
+      importance: Notifications.AndroidImportance.HIGH,
+    });
+
+    // Exibir uma notificação
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Novo Pedido',
+        body: 'Vamos começar!',
+      },
+      trigger: null, // para exibir imediatamente, ou você pode definir um gatilho específico
+    });
+
+    console.log('Notificação enviada com sucesso.');
+  } catch (error) {
+    console.error('Erro ao enviar notificação:', error);
+  }
+}
+
 
 /////////////////////////////////////////////////////////////
 

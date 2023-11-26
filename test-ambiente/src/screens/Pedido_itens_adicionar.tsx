@@ -335,7 +335,10 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
           }
           if(mesa){
             onAdicionarPedido(inicial_state_mesas)
-
+            onAdicionar_pedido([])
+            // //atualizar estado inicial
+            navigation?.goBack();  // Voltar uma vez
+            navigation?.goBack();  // Voltar mais uma vez
           }else {
             if(pegarLocal) {
 
