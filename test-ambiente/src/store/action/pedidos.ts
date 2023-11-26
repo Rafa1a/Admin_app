@@ -6,7 +6,7 @@ import { Dispatch } from 'redux'
 import { db } from '../auth';
 
 import { collection,doc,onSnapshot,getDocs,query, where, updateDoc, deleteDoc, arrayRemove} from "firebase/firestore"; 
-import notifee, { AndroidImportance } from '@notifee/react-native';
+// import notifee, { AndroidImportance } from '@notifee/react-native';
 import { setMessage } from './message';
 import { fetchuser_get } from './user';
 import { ItemProps } from '../../interface/inter';
@@ -242,25 +242,25 @@ export const setTotal_Valor = (total:number) => {
 }
 
 /////////////////notificacao ///////////////////////////////////
-async function onDisplayNotification() {
-    // Request permissions (required for iOS)
-    await notifee.requestPermission()
+// async function onDisplayNotification() {
+//     // Request permissions (required for iOS)
+//     await notifee.requestPermission()
 
-    // Create a channel (required for Android)
-    const channelId = await notifee.createChannel({
-      id: 'default',
-      name: 'Default Channel',
-      vibration:true,
-      importance: AndroidImportance.HIGH
-    });
+//     // Create a channel (required for Android)
+//     const channelId = await notifee.createChannel({
+//       id: 'default',
+//       name: 'Default Channel',
+//       vibration:true,
+//       importance: AndroidImportance.HIGH
+//     });
 
-    // Display a notification
-    await notifee.displayNotification({
-      title: 'Novo Pedido',
-      body: 'Vamos começar !',
-      android: {channelId},
-    });
-  }
+//     // Display a notification
+//     await notifee.displayNotification({
+//       title: 'Novo Pedido',
+//       body: 'Vamos começar !',
+//       android: {channelId},
+//     });
+//   }
 
 /////////////////////////////////////////////////////////////
 
