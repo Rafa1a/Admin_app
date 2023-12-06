@@ -17,16 +17,19 @@ function Estoque(props: estoque_screen) {
   const [expanded3, setExpanded3] = React.useState(false); 
 
   useEffect(() => {
-    for (let i = 0; i < props.cardapio.length; i++) {
-      const item = props.cardapio[i];
-      // funcao caso o estoque seja 0 atualizar o onorof para false, retiraando o item do ar automaticamente 
-      if (item.estoque === 0) {
-        props.onAtualizar_onorof(item.id, !item.onorof);
-        props.onAtualizar_estoque(item.id,-1)
-        // console.log('alo sou')
-        break;
+    const func_estoque =async()=>{
+      for (let i = 0; i < props.cardapio.length; i++) {
+        const item = props.cardapio[i];
+        // funcao caso o estoque seja 0 atualizar o onorof para false, retiraando o item do ar automaticamente 
+        if (item.estoque === 0) {
+          await props.onAtualizar_onorof(item.id, !item.onorof);
+          await props.onAtualizar_estoque(item.id,-1)
+          console.log(item.estoque)
+          break;
+        }
       }
     }
+    func_estoque()
   }, [props.cardapio]);
    
 

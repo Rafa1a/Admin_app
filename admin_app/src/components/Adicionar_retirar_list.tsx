@@ -144,7 +144,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
         item.retirar_p === undefined 
 
       );
-      console.log("addd",add_retirar)
+      // console.log("addd",add_retirar)
      
       //atualizar quantidade
       if (findIndex !== -1) {
