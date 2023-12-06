@@ -13,6 +13,7 @@ import Pedido_itens_adicionar from "../screens/Pedido_itens_adicionar";
 import { setAdicionar_pedido } from "../store/action/adicionar_pedido";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import Updat from "../screens/Updates";
 
 //////////////////////////////////////////////////////////////////////
 const Stack = createNativeStackNavigator();
@@ -28,7 +29,8 @@ const FeedStack = (props: any) => {
 
   //splash q inicia o app e carrega os dados de auth/firebase
   return (
-    <Stack.Navigator initialRouteName="Splash" >
+    <Stack.Navigator initialRouteName="Updates" >
+      <Stack.Screen name="Updates" component={Updat} options={{ headerShown: false }} {...props} />
 
       <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} {...props} />
 
