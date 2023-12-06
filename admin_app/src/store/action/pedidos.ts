@@ -19,6 +19,7 @@ export const startPedidosListener = () => {
                 id: doc.id}) 
             }); 
         // console.log(pedidos)
+        onDisplayNotification()
         dispatch(setPedidos(pedidos));
         console.log("pedidos onsnap")
       }); 
@@ -224,7 +225,6 @@ export const setTotal_Valor = (total:number) => {
     payload:total
 }
 }
-
 /////////////////notificacao ///////////////////////////////////
 import * as Notifications from 'expo-notifications';
 
@@ -256,8 +256,7 @@ async function onDisplayNotification() {
 }
 
 
-/////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////////r
   
 
 
