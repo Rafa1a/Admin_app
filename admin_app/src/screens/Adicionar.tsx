@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import {  StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchatualizar_cardapio_estoque, fetchatualizar_cardapio_onoroff } from '../store/action/cardapio';
-import { Avatar, Button, Icon, ListItem, Tab, TabView } from '@rneui/themed';
+import {  Button,ListItem, Tab, TabView } from '@rneui/themed';
 import Adicionar_list from '../components/Adicionar_retirar_list';
 import { adicionar_screen } from '../interface/inter_adicionar';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../store/auth';
-import routes from '../routes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Adicionar(props: adicionar_screen) {
   const { params } = props.route;

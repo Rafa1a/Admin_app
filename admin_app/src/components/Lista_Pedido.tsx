@@ -1,9 +1,10 @@
 import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import Item_pedido from './Item_pedido';
 import { ItemProps, lista_pedido } from '../interface/inter';
 import { fetchExcluir_item, setTotal_Valor } from '../store/action/pedidos';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 class Lista extends React.Component<lista_pedido> {
   //procurar e excluir 1 item da lista de pedidos ids de MESA

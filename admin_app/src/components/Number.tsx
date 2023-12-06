@@ -1,6 +1,7 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import {  StyleSheet, View, Text } from 'react-native';
 import { NumeroProps } from '../interface/inter';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Numero Da mesa Componente
 export default class Numero extends React.Component<NumeroProps> {

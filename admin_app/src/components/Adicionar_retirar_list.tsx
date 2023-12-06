@@ -36,7 +36,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
   ////////////////controle checkbox////////////////////
   const [checkbox1, setCheckbox1] = useState(props.trueorfalse);
   // soma de adicionar item 
-  const [add_retirar, setAdd_retirar,] = useState(1);
+  const [add_retirar, setAdd_retirar,] = useState(0);
 
   ////////////estado inicial de itens COMUM////////////////////
   const inicial_itens:any = undefined
@@ -144,16 +144,17 @@ const adicionar_retirar = (props: adicionar_comp) => {
         item.retirar_p === undefined 
 
       );
+      console.log("addd",add_retirar)
      
       //atualizar quantidade
       if (findIndex !== -1) {
         const newarray = [...props.adicionar_pedido];
   
         // Se a quantidade for igual a zero, exclua o item
-        if (add_retirar === 0) {
-          setCheckbox1(false)
+         if (add_retirar === 0) {
           newarray.splice(findIndex, 1);
-        } else {
+        } 
+        else {
           newarray[findIndex].quantidade = add_retirar;
           // newarray[findIndex].valor_p = props.valor
         } 
@@ -177,9 +178,19 @@ const adicionar_retirar = (props: adicionar_comp) => {
     }
     // console.log(inicial_state_itens)
     // console.log(props.adicionar_pedido)
-
-
+    
   },[add_retirar])
+
+
+  //atualizar o checkbox quando nao tiver pedido
+  useEffect(()=>{
+    // console.log(props.adicionar_pedido) 
+    
+    if(add_retirar === 0 && props.adicionar_pedido.length === 0){
+      setCheckbox1(false)
+    }
+  },[add_retirar,props.adicionar_pedido])
+
 
   //funcao soma quantidade de TODOS
   const Soma = () => {
@@ -323,7 +334,9 @@ const adicionar_retirar = (props: adicionar_comp) => {
           }}
           buttonStyle={{backgroundColor:'#3c4043'}}
               
-          onPress={()=>{add_retirar <= 0? setAdd_retirar(0):setAdd_retirar(add_retirar - 1)}} 
+          onPress={()=>{
+            add_retirar <= 0? setAdd_retirar(0):setAdd_retirar(add_retirar - 1)
+          }} 
         />
 
         <ListItem.Content style={{alignItems:'center'}}>
@@ -341,13 +354,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
           <TouchableOpacity 
           style={styles.button} 
           onPress={() => setCheckbox1(prevCheckbox => !prevCheckbox)}
-          onLongPress={()=> {props.adicionar_retirar?
-            (
-              (() => {
-                setModalVisible(true);
-                checkbox1?null:setCheckbox1(prevCheckbox => !prevCheckbox)
-              })()
-            ):null}}
+          
           >
             <ListItem.Title style={styles.title}>
               {props.name}
@@ -355,6 +362,27 @@ const adicionar_retirar = (props: adicionar_comp) => {
             <ListItem.Subtitle style={styles.subtittle}>
               {Soma()}
             </ListItem.Subtitle>
+            {props.adicionar_retirar?<Button  
+                size='md'	
+                radius='lg' 
+                type='outline'
+                title={'Personalizado'}
+                icon={{
+                  name: 'add',
+                  type: 'ionicons',
+                  size: 15,
+                  color: 'white',
+                }}
+                buttonStyle={{borderColor:'tomato',backgroundColor:'#3c4043'}}
+                titleStyle={{color:'white'}}  
+                onPress={()=> {props.adicionar_retirar?
+                  (
+                    (() => {
+                      setModalVisible(true);
+                      checkbox1?null:setCheckbox1(prevCheckbox => !prevCheckbox)
+                    })()
+                  ):null}} 
+              />:null}
           </TouchableOpacity>
         </ListItem.Content>
         <Button  

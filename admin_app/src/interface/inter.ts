@@ -1,3 +1,4 @@
+import { cardapio } from './inter_cardapio';
 import { NavigationProp } from "@react-navigation/native";
 export interface HeaderPedidoProps {
   numero_mesa?: number;
@@ -22,6 +23,8 @@ export interface HeaderPedidosProps {
   mesas:[],
   onFetchMesas:()=>void
   onDelete_all:()=>void
+  onAtualizar_is_pedidos_cardapio:()=>void
+  onAtualizar_user_Limpeza:()=>void
 
 }
 export interface ItemProps {
@@ -38,6 +41,10 @@ export interface ItemProps {
   adicionar_pedido:Item[]
   id?:string
   onAdicionar_pedido:(a:any)=>void
+  //estoque
+  onAtualizar_estoque:(id:string,estoque:number)=>void
+  cardapio: any[]
+
 }
 
 export interface NumeroProps {
@@ -66,6 +73,10 @@ export interface pedido_props {
     status_bar?:boolean
     onFetchPedidos_Excluir:(id:string)=>void
     onFetchPedidos_Excluir_Mesa:(id:string[])=>void
+    //estoque
+    pedidos:pedido_inter[]
+    cardapio:any[]
+    onAtualizar_estoque:(id:string,estoque:number)=>void
 
   }
 export interface user_on{

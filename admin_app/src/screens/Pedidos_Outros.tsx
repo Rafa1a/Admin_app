@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, FlatList, Dimensions, ScrollView } from 'react-native';
+import React from 'react';
+import {  StyleSheet, Text, View, FlatList, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchpedidos,startPedidosListener,fetchatualizar_pedido} from '../store/action/pedidos';
 import Pedido from '../components/Pedido'
 import { pedido_inter, user_on } from '../interface/inter';
-import { fetchuser_get } from '../store/action/user';
 import Header from '../components/Header_pedidos';
 import { NavigationProp } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Props {
   pedidos: pedido_inter[];

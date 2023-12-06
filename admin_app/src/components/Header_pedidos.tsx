@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Modal,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,9 +15,12 @@ import { fetchMesas } from '../store/action/adicionar_pedido';
 import { connect } from 'react-redux';
 import List_mesas from './List_mesas';
 import { deletePedidos } from '../store/action/pedidos';
+import { fetchAtualizarCardapioIdPedidosLimpeza } from '../store/action/cardapio';
+import { fetchAtualizarUserLimpeza } from '../store/action/user';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Header de Pedidos simples
-const Header = ({ outros, online, mesa, navigation, onFetchMesas, mesas,onDelete_all }: HeaderPedidosProps) => {
+const Header = ({ outros, online, mesa, navigation, onFetchMesas, mesas,onDelete_all, onAtualizar_is_pedidos_cardapio,onAtualizar_user_Limpeza }: HeaderPedidosProps) => {
   
   // busacar mesas no banco de dados
   useEffect(()=>{
@@ -67,8 +69,10 @@ const Header = ({ outros, online, mesa, navigation, onFetchMesas, mesas,onDelete
           color: 'white',
         }}
         buttonStyle={{ borderColor: '#0E00E3', backgroundColor: '#2d2f31' }}
-        onPress={() => {
-          onDelete_all()
+        onPress={async() => {
+         await onDelete_all();
+         await onAtualizar_is_pedidos_cardapio();
+         await onAtualizar_user_Limpeza();
         }}
       />
       {outros ? (
@@ -217,7 +221,9 @@ const mapStateProps = ({ pedidos }: { pedidos: any }) => {
 const mapDispatchProps = (dispatch: any) => {
   return {
     onFetchMesas : () => dispatch(fetchMesas()),
-    onDelete_all:() => dispatch(deletePedidos())
+    onDelete_all:() => dispatch(deletePedidos()),
+    onAtualizar_is_pedidos_cardapio:()=>dispatch(fetchAtualizarCardapioIdPedidosLimpeza()),
+    onAtualizar_user_Limpeza:()=>dispatch(fetchAtualizarUserLimpeza())
   };
 };
 export default connect(mapStateProps,mapDispatchProps)(Header)

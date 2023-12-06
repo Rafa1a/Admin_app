@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -12,10 +11,12 @@ import { ItemProps } from '../interface/inter';
 import { connect } from 'react-redux';
 import { setTotal_Valor } from '../store/action/pedidos';
 import { Icon } from '@rneui/themed';
+import { fetchatualizar_cardapio_estoque } from '../store/action/cardapio';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
-export default (props: ItemProps) => {
+const Item_pedido = (props: ItemProps) => {
     // funcao que retorna caso nao seja lanches ou hotdogs
     // if(props.categoria === "bar" || props.categoria === "bebidas"  || props.categoria_2 === "porcoes" ) {
     //     return
@@ -44,6 +45,7 @@ export default (props: ItemProps) => {
    :null
         // retorna o nome do item a ser feito e se tiver adicionais e retiradas /para pedidos da mesa
         const item = {
+            id:props.id,
             categoria: props.categoria,
             categoria_2: props.categoria_2,
             adicionar_p: props.adicionar_p,
@@ -85,7 +87,25 @@ export default (props: ItemProps) => {
         name='delete'
         type='MaterialIcons'
         color='#E81000'
-        onPress={()=>props.objeto_lista_ids?props.objeto_lista_ids(item):null} 
+        onPress={async()=>
+            {
+            props.objeto_lista_ids?props.objeto_lista_ids(item):null
+            //atualizar estoque adicionando oq retirou
+            const item_cardapio = props.cardapio.find(cardapio => cardapio.id === item.id)
+
+            if(item_cardapio.categoria === 'bebidas'){
+                if(item_cardapio.estoque < 0){
+                    const newestoque = item.quantidade 
+                    // console.log(newestoque)
+                    await props.onAtualizar_estoque(item.id, newestoque)
+                }else {
+                    const newestoque = item_cardapio.estoque + item.quantidade 
+                    // console.log(newestoque)
+                    await props.onAtualizar_estoque(item.id, newestoque)
+                }
+            }
+            
+            }} 
         />:null
 
 
@@ -237,3 +257,18 @@ const styles = StyleSheet.create({
    
 });
 
+const mapStateProps = ({ cardapio }: { cardapio: any}) => {
+    return {
+        cardapio: cardapio.cardapio,
+    };
+  };
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+      
+      onAtualizar_estoque:(id:string,estoque:number)=>dispatch(fetchatualizar_cardapio_estoque(id,estoque)),
+      
+    };
+  };
+  
+export default connect(mapStateProps, mapDispatchToProps)(Item_pedido);
+  

@@ -1,7 +1,6 @@
 import { Avatar, FAB, Icon } from '@rneui/themed';
 import React from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -14,6 +13,7 @@ import Number from './Number'
 import { HeaderPedidoProps } from '../interface/inter';
 import { createAndOpenPDF } from '../store/action/html_pdf';
 import { connect } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
  class Header_pedido extends React.Component<HeaderPedidoProps> {
   state = {

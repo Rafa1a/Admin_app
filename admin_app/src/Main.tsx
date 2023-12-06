@@ -6,7 +6,7 @@ import Indice from "./routes/index"
 import { message } from './interface/inter_actions';
 import { connect } from 'react-redux';
 import { setMessage } from './store/action/message';
-import { fetchatualizar_cardapio_estoque_auto } from './store/action/cardapio';
+import { fetchAtualizarCardapioIdPedidosLimpeza, fetchatualizar_cardapio_estoque_auto } from './store/action/cardapio';
 import { pedido_inter } from './interface/inter';
 import { cardapio } from './interface/inter_cardapio';
 //definindo interface do app base
@@ -31,9 +31,9 @@ const App = (props:Props) => {
   //atualizar estoque automaticamente
   useEffect(() => {
     if(props.pedidos!==undefined && props.cardapio!==undefined){
-      const pedidosTrue = props.pedidos.filter(item => item.status === true);
+      // const pedidosTrue = props.pedidos.filter(item => item.status === true);
   
-      const bebidasPedidos_ids = pedidosTrue.map(pedido => {
+      const bebidasPedidos_ids = props.pedidos.map(pedido => {
         const bebidas = pedido.itens.filter(item => item.categoria === 'bebidas');
         const id_pedido = pedido.id;
         return { id_pedido, temBebidas: bebidas.length > 0, ids: bebidas.map(item => item.id), bebida_quantidade: bebidas.map(item => item.quantidade) };
@@ -48,7 +48,7 @@ const App = (props:Props) => {
             const id_pedido_existe = props.cardapio[cardapioIndex].id_pedido
             ? props.cardapio[cardapioIndex].id_pedido.some((id_pedido:any) => bebida.id_pedido.includes(id_pedido))
             : null;
-           
+            
     
             if (!id_pedido_existe) {
               const newarray = props.cardapio;
@@ -62,6 +62,7 @@ const App = (props:Props) => {
           }  
         });    
       }); 
+
     }
    
   }, [props.pedidos]);
@@ -80,7 +81,8 @@ const mapStateToProps = ({ message,cardapio,pedidos }: { message: message,cardap
 const mapDispatchToProps = (dispatch: any) => {
   return {
     clearMessage: () => dispatch(setMessage({ title: '', text: '' })),
-    onAtualizar_estoque:(id:string,estoque:number,id_pedido:any)=>dispatch(fetchatualizar_cardapio_estoque_auto(id,estoque,id_pedido))
+    onAtualizar_estoque:(id:string,estoque:number,id_pedido:any)=>dispatch(fetchatualizar_cardapio_estoque_auto(id,estoque,id_pedido)),
+    
   };
 };
 

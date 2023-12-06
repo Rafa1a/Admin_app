@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,6 +11,7 @@ import Lista from '../components/Lista_Pedido'
 import { connect } from 'react-redux';
 import {fetchatualizar_pedido, fetchatualizar_pedido_mesa} from '../store/action/pedidos' 
 import { pedido_itens_comp } from '../interface/inter';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
  class Pedido_itens extends React.Component<pedido_itens_comp>{

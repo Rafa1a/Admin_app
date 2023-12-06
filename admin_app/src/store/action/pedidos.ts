@@ -1,15 +1,10 @@
 
-import axios from 'axios'
 import {SET_PEDIDOS,SET_PEDIDOS_MESA, SET_TOTALVALOR} from './actionTypes'
-import { Dispatch } from 'redux'
 //auth
 import { db } from '../auth';
-
 import { collection,doc,onSnapshot,getDocs,query, where, updateDoc, deleteDoc, arrayRemove} from "firebase/firestore"; 
 import { setMessage } from './message';
-import { fetchuser_get } from './user';
 import { ItemProps } from '../../interface/inter';
-import { fetchcardapio } from './cardapio';
 
 //onSnapshot para atualizar caso alguma informacao mude 
 export const startPedidosListener = () => {
@@ -17,16 +12,15 @@ export const startPedidosListener = () => {
     try{
       const q = query(collection(db, "pedidos"));
       onSnapshot(q, (snapshot) => {
-        const cities: any[] = [];
-        snapshot.forEach((doc) => {
-            cities.push(doc.data());
-        });
-        // if(cities.length === 1) {
-        //   onDisplayNotification()
-        // }
+        const pedidos: any[] = [];
+          snapshot.forEach((doc) => {
+              const rawPedidos = doc.data();
+              pedidos.push({...rawPedidos,
+                id: doc.id}) 
+            }); 
+        // console.log(pedidos)
+        dispatch(setPedidos(pedidos));
         console.log("pedidos onsnap")
-        dispatch(fetchpedidos());
-        dispatch(fetchuser_get())
       }); 
     }catch (e) {
         // console.error("Error fetching documents: ", e);
@@ -42,48 +36,48 @@ export const startPedidosListener = () => {
 
 //chamada assyncrona com o firebase get () com QUERY e WHERE retornando uma consulta especifica
 
-export const fetchpedidos =  () =>{
-  return async (dispatch:any)=>{
-    try {
-      const q = query(collection(db, "pedidos"));
-      // const pedidosCol = collection(db, 'pedidos');
-      const querySnapshot = await getDocs(q);
-      const pedidos = querySnapshot.docs.map((doc) => {
-        const rawPedidos = doc.data();
-        return {
-          ...rawPedidos,
-          id: doc.id
-        };
-      }); 
-      pedidos.sort((a:any, b:any) => b.ordem - a.ordem)
-      // console.log("pedidossssssss")
+// export const fetchpedidos =  () =>{
+//   return async (dispatch:any)=>{
+//     try {
+//       const q = query(collection(db, "pedidos"));
+//       // const pedidosCol = collection(db, 'pedidos');
+//       const querySnapshot = await getDocs(q);
+//       const pedidos = querySnapshot.docs.map((doc) => {
+//         const rawPedidos = doc.data();
+//         return {
+//           ...rawPedidos,
+//           id: doc.id
+//         };
+//       }); 
+//       pedidos.sort((a:any, b:any) => b.ordem - a.ordem)
+//       // console.log("pedidossssssss")
       
-       dispatch(setPedidos(pedidos))
+//        dispatch(setPedidos(pedidos))
       
-    } catch (e) {
-      // console.error("Error fetching documents: ", e);
-      dispatch(setMessage({
-        title: 'Error',
-        text: 'Ocorreu um erro ao contatar o servidor dos Pedidos'
-      }))
-    }
-    ///////////ANTIGO  data base///////////
-      // axios.get('/pedidos.json')
-      // .catch(err => console.log(err))
-      // .then((res:any) => {
+//     } catch (e) {
+//       // console.error("Error fetching documents: ", e);
+//       dispatch(setMessage({
+//         title: 'Error',
+//         text: 'Ocorreu um erro ao contatar o servidor dos Pedidos'
+//       }))
+//     }
+//     ///////////ANTIGO  data base///////////
+//       // axios.get('/pedidos.json')
+//       // .catch(err => console.log(err))
+//       // .then((res:any) => {
           
-      //     const rawPedidos = res.data
-      //     const pedidos = []
-      //     for (let key in rawPedidos) {
-      //         pedidos.push({
-      //             ...rawPedidos[key],
-      //             id: key
-      //         })
-      //     }
-      //     dispatch(setPedidos(pedidos))
-      // })
-  }
-}
+//       //     const rawPedidos = res.data
+//       //     const pedidos = []
+//       //     for (let key in rawPedidos) {
+//       //         pedidos.push({
+//       //             ...rawPedidos[key],
+//       //             id: key
+//       //         })
+//       //     }
+//       //     dispatch(setPedidos(pedidos))
+//       // })
+//   }
+// }
 // chamda apra atualizar o status_chapeiro
 export const fetchatualizar_pedido = (id:any) => {
   return async (dispatch:any)=>{
@@ -99,15 +93,6 @@ export const fetchatualizar_pedido = (id:any) => {
         text: 'Ocorreu um erro ao atualizar status do pedido'
       }))
     }
-    
-    // dispatch(fetchpedidos());
-    ///////////ANTIGO  data base///////////
-      // axios.patch(`/pedidos/${id}.json`, {
-      //     status_lanche : true
-      // }).catch(err => console.log(err))
-      // .then((res:any) => {
-      //     dispatch(fetchpedidos())
-      // })
   }
 }
 // Excluir Pedido :

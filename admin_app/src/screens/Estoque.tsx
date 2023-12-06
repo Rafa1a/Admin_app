@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { ScrollView, Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchatualizar_cardapio_estoque, fetchatualizar_cardapio_onoroff } from '../store/action/cardapio';
 import { Avatar, Icon, ListItem, Tab, TabView } from '@rneui/themed';
 import Estoque_list from '../components/Estoque_list';
 import { cardapio, estoque_screen } from '../interface/inter_cardapio';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 function Estoque(props: estoque_screen) {

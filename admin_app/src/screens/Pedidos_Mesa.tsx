@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, FlatList, Dimensions, ScrollView } from 'react-native';
+import {  StyleSheet, Text, View, FlatList, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchpedidos,setPedidos_MESA,startPedidosListener} from '../store/action/pedidos';
+import { setPedidos_MESA} from '../store/action/pedidos';
 import Pedido from '../components/Pedido'
 import { pedido_inter, user_on } from '../interface/inter';
-import { fetchuser_get } from '../store/action/user';
 import Header from '../components/Header_pedidos';
 import { NavigationProp } from '@react-navigation/native';
-import { fetchcardapio, startCardapio } from '../store/action/cardapio';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Props {
   pedidos: pedido_inter[];
   pedidos_mesa:any
-  onFetchPedidos: () => void;
   onFetchCardapio:() => void
   onFetchPedidos_Mesa:(pedidos_mesa:any)=>void
   name_on?: string;
