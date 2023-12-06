@@ -19,7 +19,8 @@ export const startPedidosListener = () => {
                 id: doc.id}) 
             }); 
         // console.log(pedidos)
-        onDisplayNotification()
+        // onDisplayNotification()
+        pedidos.sort((a:any, b:any) => a.ordem - b.ordem)
         dispatch(setPedidos(pedidos));
         console.log("pedidos onsnap")
       }); 
