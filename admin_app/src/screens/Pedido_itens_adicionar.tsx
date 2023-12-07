@@ -24,28 +24,29 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
   const { numero_mesa, mesa } = route.params;
   
   // console.log(numero_mesa,mesa)
-  const ordemMaisAlta = () => {
-    if (pedidos.length === 0) {
-      return 0; // Retorna 0 se não houver pedidos
-    }
-
-    // Encontrar o pedido com a ordem mais alta
-    const ordens = pedidos.map(item => item.ordem);
-    const ordemMaxima = Math.max(...ordens);
-    // console.log(ordemMaxima + 1)
-    return ordemMaxima + 1;
-  };
+ 
 
   
   
   useEffect(()=>{
+    const ordemMaisAlta = () => {
+      if (pedidos.length === 0) {
+        return 0; // Retorna 0 se não houver pedidos
+      }
+  
+      // Encontrar o pedido com a ordem mais alta
+      const ordens = pedidos.map(item => item.ordem);
+      const ordemMaxima = Math.max(...ordens);
+      // console.log(ordemMaxima + 1)
+      return ordemMaxima + 1;
+    };
    if(mesa){
       inicial_state_mesas.numero_mesa = numero_mesa
       inicial_state_mesas.ordem = ordemMaisAlta()
    } else {
       inicial_state_outros.ordem = ordemMaisAlta() 
    }
-  },[])
+  },[pedidos])
   
     //state de rua numero e local// uso apenas para OUTROS
     const [textRua, setTextRua] = useState('');
