@@ -206,6 +206,24 @@ export const deletePedidos = () => {
   };
 };
 
+//adicionar list_ids pedidos numero mesa === numero mesa 
+export const fetchadicionar_list_ids = (ids:string[],id:string) => {
+  return async (dispatch:any)=>{
+    try{
+      const pedidoRef = doc(db, 'pedidos', id);
+      await updateDoc(pedidoRef, {
+        list_ids: ids
+      });
+    }catch (e) {
+      // console.error("Error fetching documents: ", e);
+      dispatch(setMessage({
+        title: 'Error',
+        text: 'Ocorreu um erro ao adicionar ids dos pedidos'
+      }))
+    }
+   
+  }
+}
 // definir no redux os pedidos ACTION
 export const setPedidos =  (pedidos:any) => {
   return { 

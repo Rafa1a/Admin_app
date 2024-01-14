@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import { setTotal_Valor } from '../store/action/pedidos';
 import { Icon } from '@rneui/themed';
 import { fetchatualizar_cardapio_estoque } from '../store/action/cardapio';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -121,7 +120,7 @@ const Item_pedido = (props: ItemProps) => {
 
         console.log()
     return (
-        <SafeAreaView style={styles.container}> 
+        <View style={styles.container}> 
             <View style={styles.container_2}>
            
                 <View style={props.mesa?styles.container_3_mesa:styles.container_3||props.deleteitem?styles.container_3_mesa:styles.container_3}>
@@ -150,7 +149,7 @@ const Item_pedido = (props: ItemProps) => {
                 </View>
             </View>
             
-        </SafeAreaView>
+        </View>
     );
 }
 

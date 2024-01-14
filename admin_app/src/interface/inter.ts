@@ -123,8 +123,11 @@ export interface user_on{
   export interface pedidos_mesa{
     status:false,
     id:string,
+    ids:string[],
     numero_mesa:number,
-    itens_all: pedido_inter[]
+    itens_all: pedido_inter[],
+    localidade: "MESA" | "ONLINE" | "OUTROS";
+
   }
 
   export interface lista_pedido {
@@ -139,6 +142,8 @@ export interface user_on{
  
   export interface pedido_itens_comp{
     pedidos:pedido_inter[]
+    pedidos_mesa:pedidos_mesa[]
+
     route: any;
     navigation ?: NavigationProp<any,any>;
     onAtualizarPedido: (id: any) => void;
@@ -146,6 +151,9 @@ export interface user_on{
     onAdicionar_pedido: (id: any) => void;
     onAdicionarPedido: (id: any) => void;
     onAtualizarPedido_Mesa:(ids:string[])=>void
+     //list_ids para listagem de itens
+     onAdicionar_list_ids: (ids:string[],id:string) => void,
+    
     total:number
     adicionar_pedido:Item[]
     inicial_state_outros:pedido_inter
