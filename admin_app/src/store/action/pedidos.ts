@@ -1,5 +1,5 @@
 
-import {SET_PEDIDOS,SET_PEDIDOS_MESA, SET_TOTALVALOR} from './actionTypes'
+import {SET_PEDIDOS,SET_PEDIDOS_MESA, SET_PEDIDOS_MESA_TRUE, SET_TOTALVALOR} from './actionTypes'
 //auth
 import { db } from '../auth';
 import { collection,doc,onSnapshot,getDocs,query, where, updateDoc, deleteDoc, arrayRemove} from "firebase/firestore"; 
@@ -235,6 +235,12 @@ export const setPedidos =  (pedidos:any) => {
 export const setPedidos_MESA = (pedidos_mesa:any) => {
   return { 
       type:SET_PEDIDOS_MESA,
+      payload:pedidos_mesa
+  }
+}
+export const setPedidos_MESA_status_true = (pedidos_mesa:any) => {
+  return { 
+      type:SET_PEDIDOS_MESA_TRUE,
       payload:pedidos_mesa
   }
 }

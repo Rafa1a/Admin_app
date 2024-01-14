@@ -80,6 +80,7 @@ const Item_pedido = (props: ItemProps) => {
 
 
     const mesa_On = props.mesa?
+    props.list_ids_boolean?null:
     <Icon
         raised
         size={35}

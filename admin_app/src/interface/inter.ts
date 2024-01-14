@@ -45,6 +45,9 @@ export interface ItemProps {
   onAtualizar_estoque:(id:string,estoque:number)=>void
   cardapio: any[]
 
+  //list_ids para listagem de itens
+  list_ids_boolean?:boolean
+
 }
 
 export interface NumeroProps {
@@ -77,7 +80,8 @@ export interface pedido_props {
     pedidos:pedido_inter[]
     cardapio:any[]
     onAtualizar_estoque:(id:string,estoque:number)=>void
-
+    //list_ids para listagem de itens
+    list_ids_boolean?:boolean
   }
 export interface user_on{
   id            : string
@@ -132,12 +136,15 @@ export interface user_on{
 
   export interface lista_pedido {
     pedidos_mesa:pedidos_mesa[]
+    pedidos_mesa_true:pedidos_mesa[]
     pedidos:pedido_inter[]
     id:string
     ids?:string[]
     numero_mesa:number
     onFitchTotal_valor:(total:number)=>void
     onFitchExcluir_Item:(id:string,item:ItemProps)=>void
+    //list_ids para listagem de itens
+    list_ids_boolean?:boolean
   }
  
   export interface pedido_itens_comp{

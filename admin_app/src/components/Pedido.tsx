@@ -24,7 +24,8 @@ const Pedido = (props: pedido_props) => {
         pegar_local:props.pegar_local,
         pix:props.pix,
         cartao:props.cartao,
-        dinheiro:props.dinheiro
+        dinheiro:props.dinheiro,
+        list_ids_boolean:props.list_ids_boolean,
         })
   };
   // ususario ou mesa como retorno da const 

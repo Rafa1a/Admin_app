@@ -19,7 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
     const [loading, setLoading] = React.useState(false);
    
-    const { numero_mesa, image_on, name_on, id, ids, rua, numero, pegar_local,dinheiro,pix,cartao } = props.route.params;
+    const { numero_mesa, image_on, name_on, id, ids, rua, numero, pegar_local,dinheiro,pix,cartao,list_ids_boolean } = props.route.params;
     const atualizar_pedido = async() => {
       await props.onAtualizarPedido(id)
       // props.navigation?.navigate('Pedidos')
@@ -55,7 +55,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
       cartao={cartao}
       />
       {/*recebe o id depois faz um find em pedidos qual id === id_pedidos*/}
-      <Lista id={id} numero_mesa={numero_mesa} ids={ids}/> 
+      <Lista id={id} numero_mesa={numero_mesa} ids={ids}
+      list_ids_boolean={list_ids_boolean}/> 
       {/* botao para atualizar o status_$ do PEDIDO */}
       
       <View style={styles.totalContainer}>
@@ -63,6 +64,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
         <Text style={styles.totalValue}>${props.total}</Text>
       </View>
       <View style={styles.divider} />
+      {list_ids_boolean?null:
       <TouchableOpacity onPress={async() => {
         setLoading(true)
         await atualizar_escolha()
@@ -74,7 +76,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
         
       }}  style={styles.button}>
             {loading ? <Text style={styles.buttonText}>Carregando...</Text> : <Text style={styles.buttonText}>Atualizar</Text>}
-      </TouchableOpacity>
+      </TouchableOpacity>}
+      
       
       </ScrollView>
     </SafeAreaView>
