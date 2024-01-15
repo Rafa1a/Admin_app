@@ -18,18 +18,22 @@ function Estoque(props: estoque_screen) {
 
   useEffect(() => {
     const func_estoque =async()=>{
-      for (let i = 0; i < props.cardapio.length; i++) {
-        const item = props.cardapio[i];
-        // funcao caso o estoque seja 0 atualizar o onorof para false, retiraando o item do ar automaticamente 
+      const cardapio_bebidas = props.cardapio.filter((item:any)=> item.categoria === 'bebidas')
+      // console.log(cardapio_bebidas[4].estoque)
+      for (let i = 0; i < cardapio_bebidas.length; i++) {
+        const item = cardapio_bebidas[i]; 
+        // funcao caso o estoque seja 0 atualizar o onorof para false, retiraando o item do ar automaticamente  
+        console.log('nome',item.name)
+        console.log('estoque',item.estoque)
         if (item.estoque <= 0) {
           await props.onAtualizar_onorof(item.id, false);
           await props.onAtualizar_estoque(item.id,-1)
           console.log(item.estoque)
-          break;
-        }
-      }
+        } 
+      } 
     }
-    func_estoque()
+    func_estoque() 
+  
   }, [props.cardapio]);
    
 
