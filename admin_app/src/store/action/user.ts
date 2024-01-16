@@ -122,6 +122,26 @@ export const fetchAtualizarUserLimpeza = () => {
     }
   };
 };
+
+//funcao para deslogar todos os users q estiver na mesa 
+export const fetchAtualizarUser_status_mesa = (user_id:string) => {
+  return async (dispatch: any) => {
+    try {
+      await updateDoc(doc(db, 'user_on', user_id), {
+        status_mesa: false,
+        mesa: 0
+      }); 
+    } catch (error) {
+      // Adicione tratamento de erro conforme necessário
+      dispatch(
+        setMessage({
+          title: 'Error',
+          text: 'Ocorreu um erro ao atualziar user online',
+        })
+      );
+    }
+  }
+}
 export const setUser =  (users:user_on[]) => {
     return { 
         type:GET_USER,

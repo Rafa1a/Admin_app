@@ -18,9 +18,10 @@ import { addItemToPedidos, setAdicionar_pedido } from '../store/action/adicionar
 import { CheckBox } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchatualizar_cardapio_pedidos_quantidade } from '../store/action/cardapio';
+import { fetchAtualizarUser_status_mesa } from '../store/action/user';
 
 //////////////////////////////////////////////////
-const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigation,onAdicionar_pedido,onPedidos_quantidades,inicial_state_outros,pedidos,inicial_state_mesas,cardapio }: pedido_itens_comp & { total: number }) => {
+const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigation,onAdicionar_pedido,onPedidos_quantidades,inicial_state_outros,pedidos,inicial_state_mesas,cardapio,users_on,onUsers_status_mesa }: pedido_itens_comp & { total: number }) => {
   
   const { numero_mesa, mesa } = route.params;
   
@@ -50,6 +51,7 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
   },[pedidos])
   
     //state de rua numero e local// uso apenas para OUTROS
+    const [nome, setNome] = useState('');
     const [textRua, setTextRua] = useState('');
     const [textNumero, setTextNumero] = useState('');
     const [pegarLocal, setPegarLocal] = useState(false);
@@ -70,6 +72,7 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
   // Definir rua, número e pegar local em inicial_state_outros
     useEffect(() => {
       if(!mesa) {
+        inicial_state_outros.name_outros = nome;
         inicial_state_outros.rua = textRua;
         inicial_state_outros.numero= textNumero;
         inicial_state_outros.pegar_local = pegarLocal;
@@ -136,7 +139,7 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
 
  
 
-
+  const [loading, setLoading] = useState(false);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -154,9 +157,15 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
         {/* condicao caso mesa seja verdadeiro */}
         {mesa?null:(
         <>
-
           <View style={styles.colunContainer}>
+            <TextInput
+              placeholder="Nome"
+              style={[styles.input,{marginBottom:15}]}
+              value={nome}
+              onChangeText={(text) => setNome(text)}
+            />
             <View style={styles.inputContainer}>
+              
               <View style={styles.rowContainer}>
                   <TextInput
                     placeholder="Rua"
@@ -327,9 +336,9 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
           
           {/* button finalizar pedido */}
         <TouchableOpacity onPress={() => {
-          //atualizar pedido_quantidade
-          const finalizar_peidido = async() => {
-
+          //atualizar pedido
+          const finalizar_pedido = async() => {
+            setLoading(true)
             adicionar_pedido.forEach(async(item:any) => {
               cardapio.forEach(async(item2:any) => {
                 if(item.id === item2.id){
@@ -341,6 +350,7 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
             
             //enviar para o banco de dados
             await onAdicionarPedido(inicial_state_outros)
+            setLoading(false)
             // //atualizar estado itens
             onAdicionar_pedido([])
             // //atualizar estado inicial
@@ -348,6 +358,17 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
             navigation?.goBack();  // Voltar mais uma vez
           }
           if(mesa){
+          const atualizar_status_mesa = async() => {
+            // console.log(users_on)
+            setLoading(true)
+            users_on.forEach(async(item:any) => {
+              if(item.status_mesa){
+                if(item.mesa === numero_mesa){
+                  await onUsers_status_mesa(item.id)
+                }
+              }
+            })
+          }
           const finalizar_mesa = async() => {
             adicionar_pedido.forEach(async(item:any) => {
               cardapio.forEach(async(item2:any) => {
@@ -359,12 +380,14 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
               })
             })
             await onAdicionarPedido(inicial_state_mesas)
+            setLoading(false)
+            // //atualizar estado itens
             onAdicionar_pedido([])
             // //atualizar estado inicial
             navigation?.goBack();  // Voltar uma vez
             navigation?.goBack();  // Voltar mais uma vez
           }
-
+          atualizar_status_mesa()
           finalizar_mesa()
           }else {
             if(pegarLocal) {
@@ -375,7 +398,7 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
                 if(check1){
                   if(dinheiro!==''){
                     
-                    finalizar_peidido()
+                    finalizar_pedido()
 
                   }else{
                     Alert.alert('Defina o valor para o troco')
@@ -383,14 +406,14 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
                 }else if(check2){
                   if(visa || mastercard || elo){
                     
-                    finalizar_peidido()
+                    finalizar_pedido()
 
                   }else{
                     Alert.alert('Defina o cartão')
                   }
                 }else if (pix){
                     
-                  finalizar_peidido()
+                  finalizar_pedido()
 
                 }
               }else {
@@ -404,21 +427,21 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
                 if(check1){
                   if(dinheiro!==''){
                     
-                    finalizar_peidido()
+                    finalizar_pedido()
 
                   }else{
                     Alert.alert('Defina o valor para o troco')
                   }
                 }else if(check2){
                   if(visa || mastercard || elo){
-                    finalizar_peidido()
+                    finalizar_pedido()
 
                   }else{
                     Alert.alert('Defina o cartão')
                   }
                 }else if (pix){
                     
-                  finalizar_peidido()
+                  finalizar_pedido()
 
                 }
               }else {
@@ -432,7 +455,9 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
           }
          
           }} style={styles.button}>
-          <Text style={styles.buttonText}>Finalizar</Text>
+            {loading?( <Text style={styles.buttonText}>Carregando...</Text>)
+            :<Text style={styles.buttonText}>Finalizar</Text>}
+          
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -568,7 +593,7 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateProps = ({ pedidos,state,cardapio }: { pedidos: any,state:any,cardapio:any }) => {
+const mapStateProps = ({ pedidos,state,cardapio,user }: { pedidos: any,state:any,cardapio:any,user:any }) => {
   return {
     pedidos: pedidos.pedidos,
     total: pedidos.total,
@@ -577,6 +602,10 @@ const mapStateProps = ({ pedidos,state,cardapio }: { pedidos: any,state:any,card
     inicial_state_mesas:state.state_mesas,
 
     cardapio:cardapio.cardapio,
+
+    users_on:user.users,
+
+
   };
 };
 const mapDispatchProps = (dispatch: any) => {
@@ -584,6 +613,7 @@ const mapDispatchProps = (dispatch: any) => {
     onAdicionarPedido: (item:any) => dispatch(addItemToPedidos(item)),
     onAdicionar_pedido: (pedido:[]) => dispatch(setAdicionar_pedido(pedido)),
     onPedidos_quantidades: (id:string,number:number) => dispatch(fetchatualizar_cardapio_pedidos_quantidade(id,number)),
+    onUsers_status_mesa: (id:string) => dispatch(fetchAtualizarUser_status_mesa(id)),
   };
 };
 export default connect(mapStateProps, mapDispatchProps)(Pedido_itens);

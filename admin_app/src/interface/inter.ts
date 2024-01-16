@@ -118,6 +118,8 @@ export interface user_on{
     dinheiro:number;
     cartao:cartao;
     pix:boolean;
+    //
+    name_outros?:string
   }
  export interface cartao{
     visa:boolean;
@@ -151,6 +153,7 @@ export interface user_on{
     pedidos:pedido_inter[]
     pedidos_mesa:pedidos_mesa[]
     cardapio:cardapio[]
+    users_on:user_on[]
     route: any;
     navigation ?: NavigationProp<any,any>;
     onAtualizarPedido: (id: any) => void;
@@ -162,6 +165,8 @@ export interface user_on{
     onPedidos_quantidades: (id:string,number:number) => void,
      //list_ids para listagem de itens
      onAdicionar_list_ids: (ids:string[],id:string) => void,
+     //USERS_ON
+     onUsers_status_mesa:(id:string)=>void
     
     total:number
     adicionar_pedido:Item[]

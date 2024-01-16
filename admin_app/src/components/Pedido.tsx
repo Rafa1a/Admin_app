@@ -64,9 +64,12 @@ const Pedido = (props: pedido_props) => {
   />
     // se tem o nome ou nao
   const username = props.name_on?
-  <Text 
-    style={props.styles?styles.textindex0:styles.text}>{props.name_on}
-  </Text>
+    <Text 
+      style={props.styles?styles.textindex0:styles.text}
+      numberOfLines={1}
+      ellipsizeMode='tail'
+      >{props.name_on}
+    </Text>
   :null
   // funcao de deletar onFetchPedidos_Excluir e onFetchPedidos_Excluir_Mesa o primeiro deleta um item com 1 id o segundo deleta um array de ids pois mesa possui mais do q 1 pedido
   const delete_ = async() => {
@@ -171,6 +174,7 @@ const Pedido = (props: pedido_props) => {
           color='tomato'
         />
       </TouchableOpacity>
+
       </View>
       
       </TouchableOpacity>
@@ -220,7 +224,7 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
     alignItems: 'center',
-    
+    width: '45%',
   },
   text: {
     fontFamily:"RobotoMono-Bold",
