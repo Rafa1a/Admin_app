@@ -17,9 +17,10 @@ import { Switch } from '@rneui/themed';
 import { addItemToPedidos, setAdicionar_pedido } from '../store/action/adicionar_pedido';
 import { CheckBox } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { fetchatualizar_cardapio_pedidos_quantidade } from '../store/action/cardapio';
 
 //////////////////////////////////////////////////
-const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigation,onAdicionar_pedido,inicial_state_outros,pedidos,inicial_state_mesas }: pedido_itens_comp & { total: number }) => {
+const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigation,onAdicionar_pedido,onPedidos_quantidades,inicial_state_outros,pedidos,inicial_state_mesas,cardapio }: pedido_itens_comp & { total: number }) => {
   
   const { numero_mesa, mesa } = route.params;
   
@@ -129,6 +130,7 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
     }else {
       inicial_state_outros.itens = adicionar_pedido;
     }
+    console.log(adicionar_pedido)
   }, [adicionar_pedido]);
 
 
@@ -325,9 +327,20 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
           
           {/* button finalizar pedido */}
         <TouchableOpacity onPress={() => {
-          //enviar para o banco de dados
-          const finalizar_peidido = () => {
-            onAdicionarPedido(inicial_state_outros)
+          //atualizar pedido_quantidade
+          const finalizar_peidido = async() => {
+
+            adicionar_pedido.forEach(async(item:any) => {
+              cardapio.forEach(async(item2:any) => {
+                if(item.id === item2.id){
+                  const pedidos_quantidade = Number(item2.pedidos_quantidade||0) + item.quantidade
+                  await onPedidos_quantidades(item.id,pedidos_quantidade)
+                }
+              })
+            })
+            
+            //enviar para o banco de dados
+            await onAdicionarPedido(inicial_state_outros)
             // //atualizar estado itens
             onAdicionar_pedido([])
             // //atualizar estado inicial
@@ -335,11 +348,24 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
             navigation?.goBack();  // Voltar mais uma vez
           }
           if(mesa){
-            onAdicionarPedido(inicial_state_mesas)
+          const finalizar_mesa = async() => {
+            adicionar_pedido.forEach(async(item:any) => {
+              cardapio.forEach(async(item2:any) => {
+                if(item.id === item2.id){
+                  const pedidos_quantidade = Number(item2.pedidos_quantidade||0) + item.quantidade
+                  // console.log(pedidos_quantidade)
+                  await onPedidos_quantidades(item.id,pedidos_quantidade)
+                }
+              })
+            })
+            await onAdicionarPedido(inicial_state_mesas)
             onAdicionar_pedido([])
             // //atualizar estado inicial
             navigation?.goBack();  // Voltar uma vez
             navigation?.goBack();  // Voltar mais uma vez
+          }
+
+          finalizar_mesa()
           }else {
             if(pegarLocal) {
 
@@ -542,19 +568,22 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateProps = ({ pedidos,state }: { pedidos: any,state:any }) => {
+const mapStateProps = ({ pedidos,state,cardapio }: { pedidos: any,state:any,cardapio:any }) => {
   return {
     pedidos: pedidos.pedidos,
     total: pedidos.total,
     adicionar_pedido:pedidos.adicionar_pedido,
     inicial_state_outros:state.state_outros,
-    inicial_state_mesas:state.state_mesas
+    inicial_state_mesas:state.state_mesas,
+
+    cardapio:cardapio.cardapio,
   };
 };
 const mapDispatchProps = (dispatch: any) => {
   return {
     onAdicionarPedido: (item:any) => dispatch(addItemToPedidos(item)),
     onAdicionar_pedido: (pedido:[]) => dispatch(setAdicionar_pedido(pedido)),
+    onPedidos_quantidades: (id:string,number:number) => dispatch(fetchatualizar_cardapio_pedidos_quantidade(id,number)),
   };
 };
 export default connect(mapStateProps, mapDispatchProps)(Pedido_itens);

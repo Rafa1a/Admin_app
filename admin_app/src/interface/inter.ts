@@ -150,7 +150,7 @@ export interface user_on{
   export interface pedido_itens_comp{
     pedidos:pedido_inter[]
     pedidos_mesa:pedidos_mesa[]
-
+    cardapio:cardapio[]
     route: any;
     navigation ?: NavigationProp<any,any>;
     onAtualizarPedido: (id: any) => void;
@@ -158,6 +158,8 @@ export interface user_on{
     onAdicionar_pedido: (id: any) => void;
     onAdicionarPedido: (id: any) => void;
     onAtualizarPedido_Mesa:(ids:string[])=>void
+    //pedidos_quantidades
+    onPedidos_quantidades: (id:string,number:number) => void,
      //list_ids para listagem de itens
      onAdicionar_list_ids: (ids:string[],id:string) => void,
     

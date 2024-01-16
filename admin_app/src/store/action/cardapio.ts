@@ -186,7 +186,25 @@ export const startCardapio = () => {
       }
     };
   };
-  
+
+///////////////////atualizar pedidos_quantidade + 1 
+export const fetchatualizar_cardapio_pedidos_quantidade = (id:string,number:number) => {
+  return async (dispatch:any)=>{
+    try{
+      const pedidoRef = doc(db, 'cardapio', id);
+      await updateDoc(pedidoRef, {
+        pedidos_quantidade: number
+      });
+    }catch (e) {
+      // console.error("Error fetching documents: ", e);
+      dispatch(setMessage({
+        title: 'Error',
+        text: 'Ocorreu um erro ao atualizar estado do cardapio'
+      }))
+    }
+    
+  }
+}
   //set cardapio para toda a aplicacao
 export const setCardapio = (cardapio:any) =>{
     return { 
