@@ -21,7 +21,7 @@ import { fetchatualizar_cardapio_pedidos_quantidade } from '../store/action/card
 import { fetchAtualizarUser_status_mesa } from '../store/action/user';
 
 //////////////////////////////////////////////////
-const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigation,onAdicionar_pedido,onPedidos_quantidades,inicial_state_outros,pedidos,inicial_state_mesas,cardapio,users_on,onUsers_status_mesa }: pedido_itens_comp & { total: number }) => {
+const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigation,onAdicionar_pedido,onPedidos_quantidades,inicial_state_outros,pedidos,inicial_state_mesas,cardapio, }: pedido_itens_comp & { total: number }) => {
   
   const { numero_mesa, mesa } = route.params;
   
@@ -358,17 +358,6 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
             navigation?.goBack();  // Voltar mais uma vez
           }
           if(mesa){
-          const atualizar_status_mesa = async() => {
-            // console.log(users_on)
-            setLoading(true)
-            users_on.forEach(async(item:any) => {
-              if(item.status_mesa){
-                if(item.mesa === numero_mesa){
-                  await onUsers_status_mesa(item.id)
-                }
-              }
-            })
-          }
           const finalizar_mesa = async() => {
             adicionar_pedido.forEach(async(item:any) => {
               cardapio.forEach(async(item2:any) => {
@@ -387,7 +376,6 @@ const Pedido_itens = ({ route, total, adicionar_pedido,onAdicionarPedido,navigat
             navigation?.goBack();  // Voltar uma vez
             navigation?.goBack();  // Voltar mais uma vez
           }
-          atualizar_status_mesa()
           finalizar_mesa()
           }else {
             if(pegarLocal) {
@@ -613,7 +601,7 @@ const mapDispatchProps = (dispatch: any) => {
     onAdicionarPedido: (item:any) => dispatch(addItemToPedidos(item)),
     onAdicionar_pedido: (pedido:[]) => dispatch(setAdicionar_pedido(pedido)),
     onPedidos_quantidades: (id:string,number:number) => dispatch(fetchatualizar_cardapio_pedidos_quantidade(id,number)),
-    onUsers_status_mesa: (id:string) => dispatch(fetchAtualizarUser_status_mesa(id)),
+   
   };
 };
 export default connect(mapStateProps, mapDispatchProps)(Pedido_itens);

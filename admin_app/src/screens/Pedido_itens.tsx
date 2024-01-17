@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import {fetchadicionar_list_ids, fetchatualizar_pedido, fetchatualizar_pedido_mesa} from '../store/action/pedidos' 
 import { pedido_itens_comp } from '../interface/inter';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { fetchAtualizarUser_status_mesa } from '../store/action/user';
 
 
  const Pedido_itens = (props:pedido_itens_comp) =>{
@@ -66,7 +67,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
       <View style={styles.divider} />
       {list_ids_boolean?null:
       <TouchableOpacity onPress={async() => {
+        const atualizar_status_mesa = async() => {
+          // console.log(users_on)
+          setLoading(true)
+          props.users_on.forEach(async(item:any) => {
+            if(item.status_mesa){
+              if(item.mesa === numero_mesa){
+                await props.onUsers_status_mesa(item.id)
+              }
+            }
+          })
+        }
         setLoading(true)
+        atualizar_status_mesa()
         await atualizar_escolha()
         if(numero_mesa){
           await adicionar_list_ids()
@@ -152,6 +165,7 @@ const mapDispatchProps = (dispatch: any) => {
     onAtualizarPedido: (id:any) => dispatch(fetchatualizar_pedido(id)),
     onAtualizarPedido_Mesa: (ids:any) => dispatch(fetchatualizar_pedido_mesa(ids)),
     onAdicionar_list_ids: (ids:string[],id:string) => dispatch(fetchadicionar_list_ids(ids,id)),
+    onUsers_status_mesa: (id:string) => dispatch(fetchAtualizarUser_status_mesa(id)),
   };
 };
 
