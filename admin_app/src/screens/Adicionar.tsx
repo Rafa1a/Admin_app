@@ -335,10 +335,10 @@ function Adicionar(props: adicionar_screen) {
                       find.id === item.id 
                     );
                     if(find){
-                    return <Adicionar_list {...item}   trueorfalse={true} />
+                    return <Adicionar_list {...item}  adicionar_retirar trueorfalse={true} />
                     }
                  
-                  return <Adicionar_list {...item} trueorfalse={false}/>
+                  return <Adicionar_list {...item} adicionar_retirar trueorfalse={false}/>
                   }}
                 />
                 </ListItem.Accordion>

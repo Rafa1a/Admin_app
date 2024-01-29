@@ -251,7 +251,23 @@ export const fetchadicionar_cardapio = (item:any) => {
       
     }
   }
-  //set cardapio para toda a aplicacao
+///retirar um item do cardapio
+export const fetchretirar_cardapio = (id:any) => {
+    return async (dispatch:any)=>{
+      try{
+        await deleteDoc(doc(db, "cardapio", id));
+      }catch (e) {
+        // console.error("Error fetching documents: ", e);
+        dispatch(setMessage({
+          title: 'Error',
+          text: 'Ocorreu um erro ao retirar item do cardapio'
+        }))
+      }
+      
+    }
+  }
+
+//set cardapio para toda a aplicacao
 export const setCardapio = (cardapio:any) =>{
     return { 
         type:SET_CARDAPIO,

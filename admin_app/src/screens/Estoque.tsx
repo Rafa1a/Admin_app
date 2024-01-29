@@ -306,20 +306,36 @@ function Estoque(props: estoque_screen) {
           />
         </TabView.Item>
       </TabView>
-      {/* button para levar ao Cardapio_add */}
-      <TouchableOpacity
-        style={{
-          backgroundColor: '#E8F0FE',
-          borderRadius: 50,
-          width: 60,
-          height: 60,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        onPress={() => props.navigation.navigate('Cardapio_add')}
-      >
-        <Icon name="add" color="#2D2F31" size={30} />
-      </TouchableOpacity>
+      <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+        {/* button para levar ao Cardapio_add */}
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#E8F0FE',
+            borderRadius: 50,
+            width: 60,
+            height: 60,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => props.navigation.navigate('Cardapio_add')}
+        >
+          <Icon name="add" color="#2D2F31" size={30} />
+        </TouchableOpacity>
+        {/* button para levar ao Cardapio_retirar */}
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#E8F0FE',
+            borderRadius: 50,
+            width: 60,
+            height: 60,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => props.navigation.navigate('Cardapio_retirar')}
+        > 
+          <Icon name="remove" color="#2D2F31" size={30} />
+        </TouchableOpacity>
+      </View>
   </SafeAreaView>
   );
 }
