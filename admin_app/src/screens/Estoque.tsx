@@ -23,8 +23,8 @@ function Estoque(props: estoque_screen) {
       for (let i = 0; i < cardapio_bebidas.length; i++) {
         const item = cardapio_bebidas[i]; 
         // funcao caso o estoque seja 0 atualizar o onorof para false, retiraando o item do ar automaticamente  
-        console.log('nome',item.name)
-        console.log('estoque',item.estoque)
+        // console.log('nome',item.name)
+        // console.log('estoque',item.estoque)
         if (item.estoque <= 0) {
           await props.onAtualizar_onorof(item.id, false);
           await props.onAtualizar_estoque(item.id,-1)
@@ -306,6 +306,20 @@ function Estoque(props: estoque_screen) {
           />
         </TabView.Item>
       </TabView>
+      {/* button para levar ao Cardapio_add */}
+      <TouchableOpacity
+        style={{
+          backgroundColor: '#E8F0FE',
+          borderRadius: 50,
+          width: 60,
+          height: 60,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => props.navigation.navigate('Cardapio_add')}
+      >
+        <Icon name="add" color="#2D2F31" size={30} />
+      </TouchableOpacity>
   </SafeAreaView>
   );
 }

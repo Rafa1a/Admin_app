@@ -1,8 +1,9 @@
 import { collection,doc,onSnapshot,getDocs,query, where, updateDoc, deleteDoc, arrayRemove,addDoc, arrayUnion, getDoc} from "firebase/firestore"; 
-import { db } from '../auth';
+import { db, storage } from '../auth';
 
 import { setMessage } from "./message";
-import { SET_CARDAPIO } from "./actionTypes";
+import { SET_CARDAPIO, SET_CARDAPIO_URL } from "./actionTypes";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 //onSnapshot para atualizar caso alguma informacao mude 
 
@@ -205,10 +206,62 @@ export const fetchatualizar_cardapio_pedidos_quantidade = (id:string,number:numb
     
   }
 }
+///////////////////atualizar pedidos_quantidade - 1
+
+//enviar par ao storage imagem
+export const fetchatualizar_cardapio_imagem = (imagem:any) => {
+  return async (dispatch:any)=>{
+    try{
+      const response = await fetch(imagem);
+      const blob = await response.blob();
+
+      const storage = getStorage();
+      const id = Date.now(); // Generate a unique id
+      const imageRef = ref(storage, `cardapio/${id}`);
+      const uploadTask = uploadBytes(imageRef, blob);
+
+      uploadTask.then(async () => {
+        console.log('Image uploaded to the bucket!');
+        const url = await getDownloadURL(imageRef);
+        dispatch(set_CARDAPIO_URL(url));
+        console.log('Download URL:', url);
+      });
+
+    }catch (e) {
+      // console.error("Error fetching documents: ", e);
+      dispatch(setMessage({
+        title: 'Error',
+        text: 'Ocorreu um erro ao atualizar estado do cardapio'
+      }))
+    }
+  }
+}
+///adicionar item no cardapio firebase
+export const fetchadicionar_cardapio = (item:any) => {
+    return async (dispatch:any)=>{
+      try{
+        await addDoc(collection(db, "cardapio"), item);
+      }catch (e) {
+        // console.error("Error fetching documents: ", e);
+        dispatch(setMessage({
+          title: 'Error',
+          text: 'Ocorreu um erro ao adicionar item ao cardapio'
+        }))
+      }
+      
+    }
+  }
   //set cardapio para toda a aplicacao
 export const setCardapio = (cardapio:any) =>{
     return { 
         type:SET_CARDAPIO,
         payload:cardapio
+    }
+} 
+  //set cardapio para toda a aplicacao
+export const set_CARDAPIO_URL = (url:any) =>{
+    return { 
+        type:SET_CARDAPIO_URL,
+        payload:url
     }
 } 

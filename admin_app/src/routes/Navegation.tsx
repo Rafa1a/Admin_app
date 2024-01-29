@@ -14,7 +14,7 @@ import { setAdicionar_pedido } from "../store/action/adicionar_pedido";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Updat from "../screens/Updates";
-
+import Cardapio_add from "../screens/cardapio_add_retirar/Cardapio_add";
 //////////////////////////////////////////////////////////////////////
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator()
@@ -50,6 +50,7 @@ const FeedStack = (props: any) => {
       ), }} {...props} />
 
       <Stack.Screen name="Pedido_Adicionar" component={Pedido_itens_adicionar} options={{ headerTintColor: '#F4F7FC', headerStyle: { backgroundColor: "#28292A", }, }} {...props} />
+      <Stack.Screen name="Cardapio_add" component={Cardapio_add} options={{ headerTintColor: '#F4F7FC', headerStyle: { backgroundColor: "#28292A", }, }} {...props} />
 
     </Stack.Navigator>
   );

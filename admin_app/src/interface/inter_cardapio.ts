@@ -1,3 +1,5 @@
+import { NavigationProp } from "@react-navigation/native";
+
 export interface cardapio {
     id:string
     id_pedido:string[]
@@ -19,6 +21,7 @@ export interface estoque_screen{
     cardapio:cardapio[];
     onAtualizar_onorof: (id: any, onorof: any) => void;
     onAtualizar_estoque: (id: any, estoque: number) => void;
+    navigation ?: NavigationProp<any,any>;
 }
 export interface estoque_comp {
     estoque?: number;

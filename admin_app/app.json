@@ -2,6 +2,14 @@
   "expo": {
     "name": "Admin",
     "slug": "admin",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O aplicativo acessa suas fotos para permitir que você as compartilhe."
+        }
+      ]
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/image/icone.png",
