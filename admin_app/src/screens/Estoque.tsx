@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { ScrollView, Text, View, TouchableOpacity, StyleSheet, FlatList, Modal, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchatualizar_cardapio_estoque, fetchatualizar_cardapio_onoroff } from '../store/action/cardapio';
-import { Avatar, Icon, ListItem, Tab, TabView } from '@rneui/themed';
+import { Avatar, Button, Icon, ListItem, Tab, TabView } from '@rneui/themed';
 import Estoque_list from '../components/Estoque_list';
 import { cardapio, estoque_screen } from '../interface/inter_cardapio';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Loja_up } from '../store/action/message';
 
 
 function Estoque(props: estoque_screen) {
@@ -48,8 +49,52 @@ function Estoque(props: estoque_screen) {
   const categoria_Bebidas = ['no-alcool','alcool']
   const categoria_comidas = ['lanches','hotdogs','porcoes']
   const categoria_bar = ['drinks','sucos']
-  
   //return componente
+  /////////////////////////Modal////////////////////////
+  const data_fechado_aberto = new Date(props.fechado_aberto.data_fechado_aberto)
+
+  const [modalVisible, setModalVisible] = useState(false);
+  //fechadodata
+  const data_hoje = new Date();
+  const [data, setData] = useState(new Date());
+  const [datavisible, setDatavisible] = useState(false);
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+  const [hour, setHour] = useState('');
+  const [minutes, setMinutes] = useState('');
+  useEffect(() => {
+    const data_naw = new Date(`${data_hoje.getFullYear()}-${month}-${day}T${hour}:${minutes}:00.000Z`)
+    setData(data_naw)
+    console.log(data_hoje.getDate(), data.getDate())
+    
+  }, [day,month,hour,minutes]); 
+  // 
+  //atualizar para aberto automaticamente caso esteja fechadodata 
+  useEffect(() => { 
+    //console.log('fechado_aberto',data_hoje.getTime() , data.getTime())
+    if (props.fechado_aberto.fechado_aberto === 'fechadodata'){
+      if(data_hoje.getMonth() === data.getMonth() && data_hoje.getDate() === data.getDate() ){
+        console.log('mes e dia')
+
+        if(data_hoje.getHours() === data.getHours() && data_hoje.getMinutes() === data.getMinutes() ){
+          props.onFechar_abrir(props.fechado_aberto.id,'aberto',data.getTime())
+          console.log('hora e minutos iguais')
+
+        }else if(data_hoje.getHours() > data.getHours() ){
+          props.onFechar_abrir(props.fechado_aberto.id,'aberto',data.getTime())
+          console.log('hora maior')
+
+        }else if(data_hoje.getHours() === data.getHours() && data_hoje.getMinutes() > data.getMinutes() ){
+          props.onFechar_abrir(props.fechado_aberto.id,'aberto',data.getTime())
+          console.log('hora igual minutos maior')
+        }
+      } else if(data_hoje.getMonth() === data.getMonth() && data_hoje.getDate() > data.getDate()){
+        props.onFechar_abrir(props.fechado_aberto.id,'aberto',data.getTime())
+        console.log('mes igual dia maior')
+      }
+      //props.onFechar_abrir(props.fechado_aberto.id,'aberto',data.getTime())
+    } 
+},[data_hoje.getTime(),data,props.fechado_aberto.id,props.fechado_aberto.fechado_aberto]);
   return (
     <SafeAreaView style={styles.container}>
       {/* tab para navegacao entre as 3 pricnipais categorias*/}
@@ -321,7 +366,28 @@ function Estoque(props: estoque_screen) {
         >
           <Icon name="add" color="#2D2F31" size={30} />
         </TouchableOpacity>
+        {/* aberto fechado */}
+        <TouchableOpacity
+          style={{
+            backgroundColor: props.fechado_aberto.fechado_aberto === 'fechado'? 'red' : props.fechado_aberto.fechado_aberto === 'fechadodata'?'#c26a05':'green',
+            padding: 10,
+            // Adicione outros estilos conforme necessário
+          }}
+          onPress={() => {
+            setModalVisible(true)
+            // Adicione a ação do botão aqui
+          }}
+        >
+          {props.fechado_aberto.fechado_aberto === 'fechado' ? 
+          <Text style={{color:'white'}}>Fechado</Text> 
+          : props.fechado_aberto.fechado_aberto === 'fechadodata' ? 
+          <Text style={{color:'white'}}>
+            fechado abre :{'\n'} {data_fechado_aberto.getDate()}/{data_fechado_aberto.getMonth()+1} ás {data_fechado_aberto.getHours().toString().padStart(2, '0')}:{data_fechado_aberto.getMinutes().toString().padStart(2, '0')}
+          </Text> 
+          : <Text style={{color:'white'}}>Aberto</Text>}
+        </TouchableOpacity>
         {/* button para levar ao Cardapio_retirar */}
+        
         <TouchableOpacity
           style={{
             backgroundColor: '#E8F0FE',
@@ -336,6 +402,80 @@ function Estoque(props: estoque_screen) {
           <Icon name="remove" color="#2D2F31" size={30} />
         </TouchableOpacity>
       </View>
+
+      {/* Modal status fechado e aberto */}
+      <Modal visible={modalVisible} animationType="fade" transparent={true} >
+        <View style={{flex:1,backgroundColor:'#000000aa',justifyContent:'center',alignItems:'center'}}>
+          <View style={{width:'80%',backgroundColor:'#fff',alignItems: 'center',justifyContent: 'center'}}>         
+          <Text >Selecione o status:</Text>
+            <TouchableOpacity
+              style={{backgroundColor:'red',padding:10}}
+              onPress={() => {
+                setModalVisible(false);
+                props.onFechar_abrir(props.fechado_aberto.id,'fechado',data.getTime())
+              }}
+            >
+              <Text  style={{color:'white'}}>Fechado</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{backgroundColor:'#c26a05',padding:10}}
+              onPress={() => {
+                setDatavisible(true)
+              }}
+            >
+              <Text style={{color:'white'}}>Fechado com data</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{backgroundColor:'green',padding:10}}
+              onPress={() => {
+                setModalVisible(false);
+                props.onFechar_abrir(props.fechado_aberto.id,'aberto',data.getTime())
+              }}
+            >
+              <Text style={{color:'white'}}>Aberto</Text>
+            </TouchableOpacity>
+              {/*fechado data escolher data hora*/ }
+            {datavisible ? 
+            <>
+              <Text style={{color:'black'}}>Data:</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TextInput
+                  placeholder="Dia"
+                  style={{ borderWidth: 1, borderColor: 'black', padding: 5, marginRight: 10 }}
+                  onChangeText={(text) => setDay(text)}
+                  keyboardType="numeric"
+                />
+                <TextInput
+                  placeholder="Mês"
+                  style={{ borderWidth: 1, borderColor: 'black', padding: 5, marginRight: 10 }}
+                  onChangeText={(text) => setMonth(text)}
+                  keyboardType="numeric"
+                />
+                <TextInput
+                  placeholder="Hora"
+                  style={{ borderWidth: 1, borderColor: 'black', padding: 5, marginRight: 10 }}
+                  onChangeText={(text) => setHour(text)}
+                  keyboardType="numeric"
+                />
+                <TextInput
+                  placeholder="Minutos"
+                  style={{ borderWidth: 1, borderColor: 'black', padding: 5 }}
+                  onChangeText={(text) => setMinutes(text)}
+                  keyboardType="numeric"
+                />
+              </View>
+              <Button onPress={() => {
+                setModalVisible(false);
+                setDatavisible(false);
+                props.onFechar_abrir(props.fechado_aberto.id,'fechadodata',data.getTime())
+                }}>Salvar</Button>
+            </>
+            :null}
+          </View>
+        </View> 
+      </Modal>
+
+     
   </SafeAreaView>
   );
 }
@@ -362,15 +502,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateProps = ({ cardapio }: { cardapio: any }) => {
+const mapStateProps = ({ cardapio,message }: { cardapio: any,message:any }) => {
   return {
     cardapio: cardapio.cardapio,
+    fechado_aberto: message.fechado_aberto,
   };
 };
 const mapDispatchProps = (dispatch: any) => {
   return {
     onAtualizar_onorof: (id:any,onorof:any) => dispatch(fetchatualizar_cardapio_onoroff(id,onorof)),
     onAtualizar_estoque: (id:any,estoque:number) => dispatch(fetchatualizar_cardapio_estoque(id,estoque)),
+
+    onFechar_abrir: (id:string,fechado_aberto:any,data_fechado_aberto:any) => dispatch(Loja_up(id,fechado_aberto,data_fechado_aberto)),
   };
 };
 

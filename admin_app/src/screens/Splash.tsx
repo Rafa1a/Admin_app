@@ -7,8 +7,9 @@ import { startCardapio } from '../store/action/cardapio';
 import { startPedidosListener } from '../store/action/pedidos';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { startUsers } from '../store/action/user';
+import { startfechado_aberto } from '../store/action/message';
 
-const Splash = ({ navigation, pedidos, cardapio, onFetchPedidos, onFetchCardapio,onFetchUsers }: any) => {
+const Splash = ({ navigation, pedidos, cardapio, onFetchPedidos, onFetchCardapio,onFetchUsers,onFechar_aberto }: any) => {
   const [loaded, setLoaded] = useState(false);
   const [loaded1, setLoaded1] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -48,6 +49,7 @@ const Splash = ({ navigation, pedidos, cardapio, onFetchPedidos, onFetchCardapio
           await onFetchPedidos();
           await onFetchCardapio();
           await onFetchUsers();
+          await onFechar_aberto();
           // Atualize o estado para evitar o loop
           setLoaded(true);
           
@@ -118,6 +120,8 @@ const mapDispatchToProps = (dispatch: any) => {
     onFetchPedidos: () => dispatch(startPedidosListener()),
     onFetchCardapio: () => dispatch(startCardapio()),
     onFetchUsers: () => dispatch(startUsers()),
+
+    onFechar_aberto: () => dispatch(startfechado_aberto()),
   };
 };
 

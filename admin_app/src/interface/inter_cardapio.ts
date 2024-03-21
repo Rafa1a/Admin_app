@@ -22,6 +22,12 @@ export interface estoque_screen{
     onAtualizar_onorof: (id: any, onorof: any) => void;
     onAtualizar_estoque: (id: any, estoque: number) => void;
     navigation ?: NavigationProp<any,any>;
+    fechado_aberto?:{
+        fechado_aberto: string;
+        data_fechado_aberto: number;
+        id: string;
+    }
+    onFechar_abrir?: (id:string,fechado_aberto:any,data_fechado_aberto:any) => void;
 }
 export interface estoque_comp {
     estoque?: number;
