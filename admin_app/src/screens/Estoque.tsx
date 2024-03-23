@@ -129,11 +129,308 @@ function Estoque(props: estoque_screen) {
           );
         })}
       </Tab>
-      
       <TabView value={index} onChange={setIndex} animationType="spring" >
-        {/*criacao da 1 tabview Bebidas */}
+        {uniqueCategories.map((category: any, index: number) => {
+          let data = [];
+          let categoryName = '';
+          if (category === 'comidas') {
+            data = categoria_comidas;
+            categoryName = 'Comidas';
+          } else if (category === 'bar') {
+            data = categoria_bar;
+            categoryName = 'Bar';
+          } else if (category === 'bebidas') {
+            data = categoria_Bebidas;
+            categoryName = 'Bebidas';
+          }
+          return (
+            <TabView.Item key={index} style={{  width: '100%' }}>
+              <FlatList
+                data={data}
+                keyExtractor={(item,index) => `${index}`}
+                renderItem={({ item,index }) =>  {
+              
+                  if(item === 'lanches'){
+                    
+                  return (
+                  <ListItem.Accordion
+                    content={
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.title}>Lanches</ListItem.Title>
+                      </ListItem.Content>
+                    }
+                    isExpanded={expanded}
+                    onPress={() => {
+                      setExpanded(!expanded);
+                      setExpanded2(false)
+                      setExpanded3(false)
+                    }}
+                    containerStyle={styles.tabaccordion}
+                  >
+                      {/* flatlist dos itens do cardapio === lanches*/} 
+    
+                    <FlatList
+                      data={comidas.filter((item:any)=> item.categoria_2 === 'lanches')}
+                      keyExtractor={(item,index) => `${index}`}
+                      renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                    />
+                  </ListItem.Accordion>)
+                  }else if(item === 'hotdogs'){
+                    return (
+                    <ListItem.Accordion
+                      content={
+                        <ListItem.Content>
+                          <ListItem.Title style={styles.title}>Hot Dogs</ListItem.Title>
+                        </ListItem.Content>
+                      }
+                      isExpanded={expanded2}
+                      onPress={() => {
+                        setExpanded2(!expanded2);
+                        setExpanded(false)
+                        setExpanded3(false)
+                      }}
+                      containerStyle={styles.tabaccordion}
+                    >
+                    {/* flatlist dos itens do cardapio === hotdogs*/} 
+                    <FlatList
+                      data={comidas.filter((item:any)=> item.categoria_2 === 'hotdogs')}
+                      keyExtractor={(item,index) => `${index}`}
+                      renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                    />
+                    </ListItem.Accordion>
+                    )
+                  }else if (item === 'porcoes'){
+                    return (
+                    <ListItem.Accordion
+                      content={
+                        <ListItem.Content>
+                          <ListItem.Title style={styles.title}>Porções</ListItem.Title>
+                        </ListItem.Content>
+                      }
+                      isExpanded={expanded3}
+                      onPress={() => {
+                        setExpanded3(!expanded3);
+                        setExpanded(false)
+                        setExpanded2(false)
+                      }}
+                      containerStyle={styles.tabaccordion}
+                    >
+                    {/* flatlist dos itens do cardapio === porcoes*/} 
+                    <FlatList
+                      data={comidas.filter((item:any)=> item.categoria_2 === 'porcoes')}
+                      keyExtractor={(item,index) => `${index}`}
+                      renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                    />
+                    </ListItem.Accordion>
+                    )
+                  } else  if(item === 'no-alcool'){
+                  
+                    return (
+                        
+                    <ListItem.Accordion 
+                      content={
+                        <ListItem.Content >
+                          <ListItem.Title style={styles.title}>Alcoolicas</ListItem.Title>
+                          <ListItem.Subtitle style={styles.subtittle}>Cervejas</ListItem.Subtitle >
+                        </ListItem.Content>
+                      }
+                      isExpanded={expanded}
+                      onPress={() => {
+                        setExpanded(!expanded);
+                        setExpanded2(false)
+                        setExpanded3(false)
+                      }}
+                      containerStyle={styles.tabaccordion}
+                    >
+                      {/* flatlist dos itens do cardapio === alcool*/} 
+                      <FlatList
+                        data={bebidas.filter((item:any)=> item.categoria_2 === 'alcool')}
+                        keyExtractor={(item,index) => `${index}`}
+                        renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item} estoq/>}
+                      />
+                    </ListItem.Accordion>)
+                  }else if(item === 'alcool'){
+                      return (
+                      <ListItem.Accordion
+                        content={
+                          <ListItem.Content>
+                            <ListItem.Title style={styles.title}>No-Alcool</ListItem.Title>
+                            <ListItem.Subtitle style={styles.subtittle}>Refrigerantes</ListItem.Subtitle>
+                          </ListItem.Content>
+                        }
+                        isExpanded={expanded2}
+                        onPress={() => {
+                          setExpanded2(!expanded2);
+                          setExpanded(false)
+                          setExpanded3(false)
+                        }}
+                        containerStyle={styles.tabaccordion}
+                      >
+                      {/* flatlist dos itens do cardapio === no-alcool*/} 
+                        <FlatList
+                          data={bebidas.filter((item:any)=> item.categoria_2 === 'no-alcool')}
+                          keyExtractor={(item,index) => `${index}`}
+                          renderItem={({ item,index }) =>  (
+                          <Estoque_list 
+                            onAtualizar_onorof={props.onAtualizar_onorof}
+                            onAtualizar_estoque={props.onAtualizar_estoque}
+                            {...item} 
+                            estoq
+                          />)}
+                        />
+                      </ListItem.Accordion>
+                      )
+                  } else if(item === 'drinks'){
+                
+                      return (
+                      <ListItem.Accordion
+                        content={
+                          <ListItem.Content>
+                            <ListItem.Title style={styles.title}>Alcoolicas</ListItem.Title>
+                            <ListItem.Subtitle style={styles.subtittle}>Drinks</ListItem.Subtitle>
+                          </ListItem.Content>
+                        }
+                        isExpanded={expanded}
+                        onPress={() => {
+                          setExpanded(!expanded);
+                          setExpanded2(false)
+                          setExpanded3(false)
+                        }}
+                        containerStyle={styles.tabaccordion}
+                      >
+                      {/* flatlist dos itens do cardapio === drinks*/} 
+                      <FlatList
+                        data={bar.filter((item:any)=> item.categoria_2 === 'drinks')}
+                        keyExtractor={(item,index) => `${index}`}
+                        renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                      />
+                      </ListItem.Accordion>)
+                  }else if(item === 'sucos'){
+                        return (
+                        <ListItem.Accordion
+                          content={
+                            <ListItem.Content>
+                              <ListItem.Title style={styles.title}>No-Alcool</ListItem.Title>
+                              <ListItem.Subtitle style={styles.subtittle}>Sucos</ListItem.Subtitle>
+                            </ListItem.Content>
+                          }
+                          isExpanded={expanded2}
+                          onPress={() => {
+                            setExpanded2(!expanded2);
+                            setExpanded(false)
+                            setExpanded3(false)
+                          }}
+                          containerStyle={styles.tabaccordion}
+                        >
+                        {/* flatlist dos itens do cardapio === sucos*/} 
+        
+                        <FlatList
+                          data={bar.filter((item:any)=> item.categoria_2 === 'sucos')}
+                          keyExtractor={(item,index) => `${index}`}
+                          renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                        />
+                        </ListItem.Accordion>
+                        )
+                  } else {
+                    return  null
+                  }
+                }}
+              />
+            </TabView.Item>
+          );
+        })}
+      </TabView>
+      {/* versao antiga */}
+      {/* <TabView value={index} onChange={setIndex} animationType="spring" >
+        criacao da 1 tabview Bebidas
+        <TabView.Item style={{  width: '100%' }}>
+          flatlist do accordion comidas
+          <FlatList
+            data={categoria_comidas}
+            keyExtractor={(item,index) => `${index}`}
+            renderItem={({ item,index }) =>  {
+              
+              if(item === 'lanches'){
+                
+              return (
+              <ListItem.Accordion
+                content={
+                  <ListItem.Content>
+                    <ListItem.Title style={styles.title}>Lanches</ListItem.Title>
+                  </ListItem.Content>
+                }
+                isExpanded={expanded}
+                onPress={() => {
+                  setExpanded(!expanded);
+                  setExpanded2(false)
+                  setExpanded3(false)
+                }}
+                containerStyle={styles.tabaccordion}
+              >
+                  flatlist dos itens do cardapio === lanches 
+
+                <FlatList
+                  data={comidas.filter((item:any)=> item.categoria_2 === 'lanches')}
+                  keyExtractor={(item,index) => `${index}`}
+                  renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                />
+              </ListItem.Accordion>)
+              }else if(item === 'hotdogs'){
+                return (
+                <ListItem.Accordion
+                  content={
+                    <ListItem.Content>
+                      <ListItem.Title style={styles.title}>Hot Dogs</ListItem.Title>
+                    </ListItem.Content>
+                  }
+                  isExpanded={expanded2}
+                  onPress={() => {
+                    setExpanded2(!expanded2);
+                    setExpanded(false)
+                    setExpanded3(false)
+                  }}
+                  containerStyle={styles.tabaccordion}
+                >
+                flatlist dos itens do cardapio === hotdogs 
+                <FlatList
+                  data={comidas.filter((item:any)=> item.categoria_2 === 'hotdogs')}
+                  keyExtractor={(item,index) => `${index}`}
+                  renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                />
+                </ListItem.Accordion>
+                )
+              }else if (item === 'porcoes'){
+                return (
+                <ListItem.Accordion
+                  content={
+                    <ListItem.Content>
+                      <ListItem.Title style={styles.title}>Porções</ListItem.Title>
+                    </ListItem.Content>
+                  }
+                  isExpanded={expanded3}
+                  onPress={() => {
+                    setExpanded3(!expanded3);
+                    setExpanded(false)
+                    setExpanded2(false)
+                  }}
+                  containerStyle={styles.tabaccordion}
+                >
+                flatlist dos itens do cardapio === porcoes 
+                <FlatList
+                  data={comidas.filter((item:any)=> item.categoria_2 === 'porcoes')}
+                  keyExtractor={(item,index) => `${index}`}
+                  renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                />
+                </ListItem.Accordion>
+                )
+              }
+              return  null
+            }}
+          />
+        </TabView.Item>
+        criacao da 2 tabview comidas
         <TabView.Item style={{width: '100%' }}>
-          {/*flatlist do accordion Bebidas */}
+          flatlist do accordion Bebidas
           <FlatList
               data={categoria_Bebidas}
               keyExtractor={(item,index) => `${index}`}
@@ -158,7 +455,7 @@ function Estoque(props: estoque_screen) {
                   }}
                   containerStyle={styles.tabaccordion}
                 >
-                  {/* flatlist dos itens do cardapio === alcool*/} 
+                  flatlist dos itens do cardapio === alcool 
                   <FlatList
                     data={bebidas.filter((item:any)=> item.categoria_2 === 'alcool')}
                     keyExtractor={(item,index) => `${index}`}
@@ -182,7 +479,7 @@ function Estoque(props: estoque_screen) {
                     }}
                     containerStyle={styles.tabaccordion}
                   >
-                  {/* flatlist dos itens do cardapio === no-alcool*/} 
+                  flatlist dos itens do cardapio === no-alcool 
                     <FlatList
                       data={bebidas.filter((item:any)=> item.categoria_2 === 'no-alcool')}
                       keyExtractor={(item,index) => `${index}`}
@@ -201,93 +498,7 @@ function Estoque(props: estoque_screen) {
               }}
           />
         </TabView.Item>
-        {/*criacao da 2 tabview comidas */}
-        <TabView.Item style={{  width: '100%' }}>
-          {/*flatlist do accordion comidas */}
-          <FlatList
-            data={categoria_comidas}
-            keyExtractor={(item,index) => `${index}`}
-            renderItem={({ item,index }) =>  {
-              
-              if(item === 'lanches'){
-                
-              return (
-              <ListItem.Accordion
-                content={
-                  <ListItem.Content>
-                    <ListItem.Title style={styles.title}>Lanches</ListItem.Title>
-                  </ListItem.Content>
-                }
-                isExpanded={expanded}
-                onPress={() => {
-                  setExpanded(!expanded);
-                  setExpanded2(false)
-                  setExpanded3(false)
-                }}
-                containerStyle={styles.tabaccordion}
-              >
-                  {/* flatlist dos itens do cardapio === lanches*/} 
-
-                <FlatList
-                  data={comidas.filter((item:any)=> item.categoria_2 === 'lanches')}
-                  keyExtractor={(item,index) => `${index}`}
-                  renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
-                />
-              </ListItem.Accordion>)
-              }else if(item === 'hotdogs'){
-                return (
-                <ListItem.Accordion
-                  content={
-                    <ListItem.Content>
-                      <ListItem.Title style={styles.title}>Hot Dogs</ListItem.Title>
-                    </ListItem.Content>
-                  }
-                  isExpanded={expanded2}
-                  onPress={() => {
-                    setExpanded2(!expanded2);
-                    setExpanded(false)
-                    setExpanded3(false)
-                  }}
-                  containerStyle={styles.tabaccordion}
-                >
-                {/* flatlist dos itens do cardapio === hotdogs*/} 
-                <FlatList
-                  data={comidas.filter((item:any)=> item.categoria_2 === 'hotdogs')}
-                  keyExtractor={(item,index) => `${index}`}
-                  renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
-                />
-                </ListItem.Accordion>
-                )
-              }else if (item === 'porcoes'){
-                return (
-                <ListItem.Accordion
-                  content={
-                    <ListItem.Content>
-                      <ListItem.Title style={styles.title}>Porções</ListItem.Title>
-                    </ListItem.Content>
-                  }
-                  isExpanded={expanded3}
-                  onPress={() => {
-                    setExpanded3(!expanded3);
-                    setExpanded(false)
-                    setExpanded2(false)
-                  }}
-                  containerStyle={styles.tabaccordion}
-                >
-                {/* flatlist dos itens do cardapio === porcoes*/} 
-                <FlatList
-                  data={comidas.filter((item:any)=> item.categoria_2 === 'porcoes')}
-                  keyExtractor={(item,index) => `${index}`}
-                  renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
-                />
-                </ListItem.Accordion>
-                )
-              }
-              return  null
-            }}
-          />
-        </TabView.Item>
-        {/*criacao da 3 tabview bar */}
+        criacao da 3 tabview bar
         <TabView.Item style={{width: '100%' }}>
           <FlatList
             data={categoria_bar}
@@ -312,7 +523,7 @@ function Estoque(props: estoque_screen) {
                 }}
                 containerStyle={styles.tabaccordion}
               >
-              {/* flatlist dos itens do cardapio === drinks*/} 
+              flatlist dos itens do cardapio === drinks 
               <FlatList
                 data={bar.filter((item:any)=> item.categoria_2 === 'drinks')}
                 keyExtractor={(item,index) => `${index}`}
@@ -336,7 +547,7 @@ function Estoque(props: estoque_screen) {
                   }}
                   containerStyle={styles.tabaccordion}
                 >
-                {/* flatlist dos itens do cardapio === sucos*/} 
+                flatlist dos itens do cardapio === sucos 
 
                 <FlatList
                   data={bar.filter((item:any)=> item.categoria_2 === 'sucos')}
@@ -350,7 +561,8 @@ function Estoque(props: estoque_screen) {
             }}
           />
         </TabView.Item>
-      </TabView>
+      </TabView> */}
+      {/* botoes de adicionar e retirar */}
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
         {/* button para levar ao Cardapio_add */}
         <TouchableOpacity
