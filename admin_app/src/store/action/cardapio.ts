@@ -282,7 +282,26 @@ export const fetchretirar_cardapio = (id:any) => {
       
     }
   }
-
+//retirar varios itens do cardapios retirar itens q possuem versao === id
+export const fetchretirar_cardapio_versao = (id:any) => {
+    return async (dispatch:any)=>{
+      try{
+        const q = query(collection(db, "cardapio"), where("versao", "==", id));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        });
+      }catch (e) {
+        // console.error("Error fetching documents: ", e);
+        dispatch(setMessage({
+          title: 'Error',
+          text: 'Ocorreu um erro ao retirar item do cardapio'
+        }))
+      }
+      
+    }
+  }
+  //retirar varios itens do cardapios retirar itens q possuem versao === id
 //set cardapio para toda a aplicacao
 export const setCardapio = (cardapio:any) =>{
     return { 

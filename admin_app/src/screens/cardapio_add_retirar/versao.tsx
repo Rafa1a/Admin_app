@@ -20,50 +20,14 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
  const Cardapio_add = (props: any) => {
     const [name, setName] = React.useState('');
     const [price, setPrice] = React.useState('0');
-    const [ingredients, setIngredients] = React.useState('');
-    const [ingredients_array, setIngredients_array] = React.useState([]); //ingredientes do item [string,striung....]
     const [categoria, setCategoria] = React.useState('');
-    const [categoria_2, setCategoria_2] = React.useState('');
     const [adicionais, setAdicionais] = React.useState([]); //adicionais do item [{name, valor}...]
     const [valor_adicionais, setValor_adicionais] = React.useState(''); //valor total dos adicionais
     const [name_adicionais, setName_adicionais] = React.useState(''); //nome do adicional
 
-    const [image, setImage] = React.useState('') //imagem do item
-    const [url, setUrl] = React.useState('') //url do item
     //loading
     const [loading, setLoading] = React.useState(false)
 
-    const pickImageAsync = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          allowsEditing: true,
-          quality: 1,
-        });
-    
-        if (!result.canceled) {
-          console.log(result);
-          setImage(result.assets[0].uri);
-        } else {
-          alert('Você não selecionou uma imagem	');
-        }
-      };
-
-
-    React.useEffect(() => {
-        console.log('image',image)
-        const url_fetch = async () => {
-            await props.onSalvar_image(image)
-        }
-        if(image){
-            url_fetch()
-        }
-        
-    }, [image])
-
-    React.useEffect(() => {
-        console.log('url',props.url)
-        setUrl(props.url)
-        // props.onAdicionar_pedido(item_cardapio)
-    }, [props.url])
     const [edit, setEdit] = React.useState(false)
     const [id, setId] = React.useState('')
     const [item_edit, setItem_edit] = React.useState({} as any)
@@ -72,30 +36,19 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
         setEdit(editar)
         setId(id)
         // console.log(id,editar)
-        if(editar && id){
+        if(id){
             const item = props.cardapio.filter((item:any) => item.id === id)
             setItem_edit(item[0])
             console.log(item)
             setName(item[0].name)
             setPrice(item[0].valor)
-            setIngredients_array(item[0].ingredientes || [])
             setCategoria(item[0].categoria)
-            setCategoria_2(item[0].categoria_2)
-            setUrl(item[0].image)
             setAdicionais(item[0].adicionais || [])
         }
     }, [])
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{width:'100%'}}>
-            {/* image */}
-            <View style={{width: '100%',justifyContent:'center',alignItems:'center'}}>
-
-                {url?<Image source={{ uri: url }} containerStyle={{ width: 200, height: 200, marginBottom:10 }} PlaceholderContent={<ActivityIndicator />}/>:null}
-
-                <Button title="image"  onPress={pickImageAsync} containerStyle={{width:150}}/>
-
-            </View>
             {/* nome */}
             <Text style={{fontFamily:'OpenSans-Bold',color:'#fff',fontSize:19}}>Nome do item</Text>
             <Input
@@ -117,37 +70,6 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
                 errorMessage={price? 'Para Valores DECIMAIS usar . (ponto) não , (virgula) exemplo : 21.5' : 'Digite um valor valido'}
             />
             
-            <Divider style={{width:'100%',margin:10}}/>
-            {categoria==='comidas' || categoria==='bar'?
-            <>
-                {/* ingredientes */}
-                <View>
-                    <Text style={{fontFamily:'OpenSans-Bold',color:'#fff',fontSize:19}}>Ingredientes</Text>
-                    <Input
-                        onChangeText={text => setIngredients(text)}
-                        value={ingredients}
-                        inputContainerStyle={{backgroundColor: 'white'}}
-                    />
-                    {/* lista de ingredientes */}
-                    {ingredients_array.map((item:any, index:any) => {
-                        return (
-                            <View key={index} style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                                <Text style={{fontFamily:'OpenSans-Bold',color:'#fff',fontSize:19}}>{item}</Text>
-                                <Button title="Remover" onPress={() => {
-                                    let array = ingredients_array
-                                    array.splice(index, 1)
-                                    setIngredients_array([...array])
-                                }}/>
-                            </View>
-                        )
-                    })}
-                    <Button title="Adicionar Ingrediente" onPress={() => {
-                        setIngredients('')
-                        setIngredients_array([...ingredients_array, ingredients])
-                    }}/>
-                </View>
-            </>
-            :null}
             {categoria==='comidas'?
             <>
                 {/* adicionais */}
@@ -212,13 +134,14 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
                                 valor: parseFloat(price),
                                 // ingredientes: ingredients_array,
                                 categoria: categoria,
-                                categoria_2: categoria_2,
-                                image: url,
+                                categoria_2: item_edit.categoria_2,
+                                image: item_edit.image,
                                 onorof:item_edit.onorof,
                                 // adicionais:adicionais,
                                 estoque:item_edit.estoque,
                                 curtidas:item_edit.curtidas,
-                                comments:item_edit.comments
+                                comments:item_edit.comments,
+                               
                             }
                             console.log(item_cardapio)
                             await props.onAtualizar_cardapio(id,item_cardapio)
@@ -228,10 +151,10 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
                             const item_cardapio = {
                                 name: name,
                                 valor: parseFloat(price),
-                                ingredientes: ingredients_array,
+                                ingredientes: item_edit.ingredientes,
                                 categoria: categoria,
-                                categoria_2: categoria_2,
-                                image: url,
+                                categoria_2: item_edit.categoria_2,
+                                image: item_edit.image,
                                 onorof:item_edit.onorof,
                                 adicionais:adicionais,
                                 curtidas:item_edit.curtidas,
@@ -251,13 +174,14 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
                                 valor: parseFloat(price),
                                 // ingredientes: ingredients_array,
                                 categoria: categoria,
-                                categoria_2: categoria_2,
-                                image: url,
+                                categoria_2: item_edit.categoria_2,
+                                image: item_edit.image,
                                 onorof:false,
                                 // adicionais:adicionais,
                                 estoque:0,
                                 curtidas:0,
-                                comments:[]
+                                comments:[],
+                                versao:item_edit.id
                             }
                             console.log(item_cardapio)
                             await props.onAdicionar_cardapio(item_cardapio)
@@ -267,14 +191,15 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
                             const item_cardapio = {
                                 name: name,
                                 valor: parseFloat(price),
-                                ingredientes: ingredients_array,
+                                ingredientes: item_edit.ingredientes,
                                 categoria: categoria,
-                                categoria_2: categoria_2,
-                                image: url,
+                                categoria_2: item_edit.categoria_2,
+                                image: item_edit.image,
                                 onorof:false,
                                 adicionais:adicionais,
                                 curtidas:0,
-                                comments:[]
+                                comments:[],
+                                versao:item_edit.id
                             }
                             console.log(item_cardapio)
                             await props.onAdicionar_cardapio(item_cardapio)
