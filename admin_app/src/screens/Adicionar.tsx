@@ -102,15 +102,26 @@ function Adicionar(props: adicionar_screen) {
       </Tab>
       
       <TabView value={index} onChange={setIndex} animationType="spring" >
-        {/*criacao da 1 tabview Bebidas */}
-        <TabView.Item style={{width: '100%' }}>
-          {/*flatlist do accordion Bebidas */}
-          <FlatList
-              data={categoria_Bebidas}
-              keyExtractor={(item,index) => `${index}`}
-              
-              renderItem={({ item,index }) =>  {
-                
+      {uniqueCategories.map((category: any, index: number) => {
+          let data = [];
+          let categoryName = '';
+          if (category === 'comidas') {
+            data = categoria_comidas;
+            categoryName = 'Comidas';
+          } else if (category === 'bar') {
+            data = categoria_bar;
+            categoryName = 'Bar';
+          } else if (category === 'bebidas') {
+            data = categoria_Bebidas;
+            categoryName = 'Bebidas';
+          }
+          return (
+            <TabView.Item key={index} style={{  width: '100%' }}>
+              <FlatList
+                data={data}
+                keyExtractor={(item,index) => `${index}`}
+                renderItem={({ item,index }) =>  {
+               
                 if(item === 'no-alcool'){
                   
                 return (
@@ -192,6 +203,325 @@ function Adicionar(props: adicionar_screen) {
                     />
                   </ListItem.Accordion>
                   )
+                }else if(item === 'lanches'){
+                
+                  return (
+                  <ListItem.Accordion
+                    content={
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.title}>Lanches</ListItem.Title>
+                      </ListItem.Content>
+                    }
+                    isExpanded={expanded3}
+                    onPress={() => {
+                      setExpanded3(!expanded3);
+                      setExpanded(false)
+                      setExpanded2(false)
+                      setExpanded4(false)
+                      setExpanded5(false)
+                      setExpanded6(false)
+                      setExpanded7(false)
+                    }}
+                    containerStyle={styles.tabaccordion}
+                  >
+                      {/* flatlist dos itens do cardapio === lanches*/} 
+    
+                    <FlatList
+                      data={comidas.filter((item:any)=> item.categoria_2 === 'lanches')}
+                      keyExtractor={(item,index) => `${index}`}
+                      renderItem={({ item,index }) => {
+                        const find = props.adicionar_pedido.find(
+                          (find:any) =>
+                          find.id === item.id 
+                        );
+                        if(find){
+                        return <Adicionar_list {...item}  adicionar_retirar  trueorfalse={true} />
+                        }
+                      
+                      return <Adicionar_list {...item} adicionar_retirar  trueorfalse={false}/>
+                      }}
+                    />
+                  </ListItem.Accordion>)
+                }else if(item === 'hotdogs'){
+                  return (
+                  <ListItem.Accordion
+                    content={
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.title}>Hot Dogs</ListItem.Title>
+                      </ListItem.Content>
+                    }
+                    isExpanded={expanded4}
+                    onPress={() => {
+                      setExpanded4(!expanded4);
+                      setExpanded(false)
+                      setExpanded2(false)
+                      setExpanded3(false)
+                      setExpanded5(false)
+                      setExpanded6(false)
+                      setExpanded7(false)
+                    }}
+                    containerStyle={styles.tabaccordion}
+                  >
+                  {/* flatlist dos itens do cardapio === hotdogs*/} 
+                  <FlatList
+                    data={comidas.filter((item:any)=> item.categoria_2 === 'hotdogs')}
+                    keyExtractor={(item,index) => `${index}`}
+                    renderItem={({ item,index }) =>  {
+                      const find = props.adicionar_pedido.find(
+                        (find:any) =>
+                        find.id === item.id 
+                      );
+                      if(find){
+                      return <Adicionar_list {...item} adicionar_retirar  trueorfalse={true} />
+                      }
+                    
+                    return <Adicionar_list {...item} adicionar_retirar  trueorfalse={false}/>
+                    }}
+                  />
+                  </ListItem.Accordion>
+                  )
+                }else if (item === 'porcoes'){
+                  return (
+                  <ListItem.Accordion
+                    content={
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.title}>Porções</ListItem.Title>
+                      </ListItem.Content>
+                    }
+                    isExpanded={expanded5}
+                    onPress={() => {
+                      setExpanded5(!expanded5);
+                      setExpanded(false)
+                      setExpanded2(false)
+                      setExpanded3(false)
+                      setExpanded4(false)
+                      setExpanded6(false)
+                      setExpanded7(false)
+                    }}
+                    containerStyle={styles.tabaccordion}
+                  >
+                  {/* flatlist dos itens do cardapio === porcoes*/} 
+                  <FlatList
+                    data={comidas.filter((item:any)=> item.categoria_2 === 'porcoes')}
+                    keyExtractor={(item,index) => `${index}`}
+                    renderItem={({ item,index }) =>  {
+                      const find = props.adicionar_pedido.find(
+                        (find:any) =>
+                        find.id === item.id 
+                      );
+                      if(find){
+                      return <Adicionar_list {...item}  adicionar_retirar trueorfalse={true} />
+                      }
+                    
+                    return <Adicionar_list {...item} adicionar_retirar trueorfalse={false}/>
+                    }}
+                  />
+                  </ListItem.Accordion>
+                  )
+                }else if(item === 'drinks'){
+                
+                  return (
+                  <ListItem.Accordion
+                    content={
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.title}>Alcoolicas</ListItem.Title>
+                        <ListItem.Subtitle style={styles.subtittle}>Drinks</ListItem.Subtitle>
+                      </ListItem.Content>
+                    }
+                    isExpanded={expanded6}
+                    onPress={() => {
+                      setExpanded6(!expanded6);
+                      setExpanded(false)
+                      setExpanded2(false)
+                      setExpanded3(false)
+                      setExpanded4(false)
+                      setExpanded5(false)
+                      setExpanded7(false)
+                    }}
+                    containerStyle={styles.tabaccordion}
+                  >
+                  {/* flatlist dos itens do cardapio === drinks*/} 
+                  <FlatList
+                    data={bar.filter((item:any)=> item.categoria_2 === 'drinks')}
+                    keyExtractor={(item,index) => `${index}`}
+                    renderItem={({ item,index }) =>  {
+                      const find = props.adicionar_pedido.find(
+                        (find:any) =>
+                        find.id === item.id 
+                      );
+                      if(find){
+                      return <Adicionar_list {...item} trueorfalse={true} />
+                      }
+                    
+                    return <Adicionar_list {...item}  trueorfalse={false}/>
+                    }}
+                  />
+                  </ListItem.Accordion>)
+                }else if(item === 'sucos'){
+                  return (
+                  <ListItem.Accordion
+                    content={
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.title}>No-Alcool</ListItem.Title>
+                        <ListItem.Subtitle style={styles.subtittle}>Sucos</ListItem.Subtitle>
+                      </ListItem.Content>
+                    }
+                    isExpanded={expanded7}
+                    onPress={() => {
+                      setExpanded7(!expanded7);
+                      setExpanded(false)
+                      setExpanded2(false)
+                      setExpanded3(false)
+                      setExpanded4(false)
+                      setExpanded5(false)
+                      setExpanded6(false)
+                    }}
+                    containerStyle={styles.tabaccordion}
+                  >
+                  {/* flatlist dos itens do cardapio === sucos*/} 
+  
+                  <FlatList
+                    data={bar.filter((item:any)=> item.categoria_2 === 'sucos')}
+                    keyExtractor={(item,index) => `${index}`}
+                    renderItem={({ item,index }) => {
+                      const find = props.adicionar_pedido.find(
+                        (find:any) =>
+                        find.id === item.id 
+                      );
+                      if(find){
+                      return <Adicionar_list {...item}  trueorfalse={true}/>
+                      }
+                    
+                    return <Adicionar_list {...item}   trueorfalse={false}/>
+                    }}
+                  />
+                  </ListItem.Accordion>
+                  )
+                }else if (item === 'adicionar') {
+
+                  return( 
+                  <Button  
+                     size='md'	
+                     radius='lg' 
+                     type='outline'
+                     title={'Adicionar'}
+                     titleStyle={{
+                       fontFamily:'OpenSans-Bold',
+                       color:'#F4F7FC'
+                     }}
+                     icon={{
+                       name: 'add-circle',
+                       type: 'ionicons',
+                       size:35,
+                       color: '#F4F7FC',
+                     }}
+                     containerStyle={{marginLeft:50,marginRight:50,marginTop:expanded||expanded2||expanded3 || expanded4 || expanded5 || expanded6 || expanded7?null:"100%"}}
+                     buttonStyle={{backgroundColor:'#3c4043',borderColor:'tomato'}}
+                     onPress={()=>{
+                       props.navigation?.navigate('Pedido_Adicionar',{mesa:mesa,numero_mesa:numero_mesa})}} 
+                   />)
+                 }
+                
+                else {
+                  return  null
+                }
+                }}
+              />
+            </TabView.Item>
+          );
+        })}
+
+        {/* versao antiga :  */}
+        {/* criacao da 1 tabview Bebidas
+        <TabView.Item style={{width: '100%' }}>
+          flatlist do accordion Bebidas
+          <FlatList
+              data={categoria_Bebidas}
+              keyExtractor={(item,index) => `${index}`}
+              
+              renderItem={({ item,index }) =>  {
+                
+                if(item === 'no-alcool'){
+                  
+                return (
+                    
+                <ListItem.Accordion 
+                
+                  content={
+                    <ListItem.Content >
+                      <ListItem.Title style={styles.title}>Alcoolicas</ListItem.Title>
+                      <ListItem.Subtitle style={styles.subtittle}>Cervejas</ListItem.Subtitle >
+                    </ListItem.Content>
+                  }
+                  isExpanded={expanded}
+                  onPress={() => {
+                    setExpanded(!expanded);
+                    setExpanded2(false)
+                    setExpanded3(false)
+                    setExpanded4(false)
+                    setExpanded5(false)
+                    setExpanded6(false)
+                    setExpanded7(false)
+                  }}
+                  containerStyle={styles.tabaccordion}
+                >
+                  
+                  flatlist dos itens do cardapio === alcool 
+                  <FlatList
+                    data={bebidas.filter((item:any)=> item.categoria_2 === 'alcool')}
+                    keyExtractor={(item,index) => `${index}`}
+                    renderItem={({ item,index }:{item:any,index:number}) =>  {
+                      const find = props.adicionar_pedido.find(
+                        (find:any) =>
+                        find.id === item.id 
+                      );
+                      if(find){
+                      return <Adicionar_list {...item}   trueorfalse={true}/>
+                      }
+                    
+                    return <Adicionar_list {...item}   trueorfalse={false}/>
+                    }}
+                  />
+                </ListItem.Accordion>)
+                }else if(item === 'alcool'){
+                  return (
+                  <ListItem.Accordion
+                    content={
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.title}>No-Alcool</ListItem.Title>
+                        <ListItem.Subtitle style={styles.subtittle}>Refrigerantes</ListItem.Subtitle>
+                      </ListItem.Content>
+                    }
+                    isExpanded={expanded2}
+                    onPress={() => {
+                      setExpanded2(!expanded2);
+                      setExpanded(false)
+                      setExpanded3(false)
+                      setExpanded4(false)
+                      setExpanded5(false)
+                      setExpanded6(false)
+                      setExpanded7(false)
+                    }}
+                    containerStyle={styles.tabaccordion}
+                  >
+                  flatlist dos itens do cardapio === no-alcool 
+                    <FlatList
+                      data={bebidas.filter((item:any)=> item.categoria_2 === 'no-alcool')}
+                      keyExtractor={(item,index) => `${index}`}
+                      renderItem={({ item,index }) => {
+                        const find = props.adicionar_pedido.find(
+                          (find:any) =>
+                          find.id === item.id 
+                        );
+                        if(find){
+                        return <Adicionar_list {...item} trueorfalse={true}/>
+                        }
+                      
+                      return <Adicionar_list {...item} trueorfalse={false}/>
+                      }}
+                    />
+                  </ListItem.Accordion>
+                  )
                 }else if (item === 'adicionar') {
 
                  return( 
@@ -220,9 +550,9 @@ function Adicionar(props: adicionar_screen) {
               }}
           />
         </TabView.Item>
-        {/*criacao da 2 tabview comidas */}
+        criacao da 2 tabview comidas
         <TabView.Item style={{  width: '100%' }}>
-          {/*flatlist do accordion comidas */}
+          flatlist do accordion comidas
           <FlatList
             data={categoria_comidas}
             keyExtractor={(item,index) => `${index}`}
@@ -249,7 +579,7 @@ function Adicionar(props: adicionar_screen) {
                 }}
                 containerStyle={styles.tabaccordion}
               >
-                  {/* flatlist dos itens do cardapio === lanches*/} 
+                  flatlist dos itens do cardapio === lanches 
 
                 <FlatList
                   data={comidas.filter((item:any)=> item.categoria_2 === 'lanches')}
@@ -287,7 +617,7 @@ function Adicionar(props: adicionar_screen) {
                   }}
                   containerStyle={styles.tabaccordion}
                 >
-                {/* flatlist dos itens do cardapio === hotdogs*/} 
+                flatlist dos itens do cardapio === hotdogs 
                 <FlatList
                   data={comidas.filter((item:any)=> item.categoria_2 === 'hotdogs')}
                   keyExtractor={(item,index) => `${index}`}
@@ -325,7 +655,7 @@ function Adicionar(props: adicionar_screen) {
                   }}
                   containerStyle={styles.tabaccordion}
                 >
-                {/* flatlist dos itens do cardapio === porcoes*/} 
+                flatlist dos itens do cardapio === porcoes 
                 <FlatList
                   data={comidas.filter((item:any)=> item.categoria_2 === 'porcoes')}
                   keyExtractor={(item,index) => `${index}`}
@@ -371,7 +701,7 @@ function Adicionar(props: adicionar_screen) {
             }}
           />
         </TabView.Item>
-        {/*criacao da 3 tabview bar */}
+        criacao da 3 tabview bar
         <TabView.Item style={{width: '100%' }}>
           <FlatList
             data={categoria_bar}
@@ -400,7 +730,7 @@ function Adicionar(props: adicionar_screen) {
                 }}
                 containerStyle={styles.tabaccordion}
               >
-              {/* flatlist dos itens do cardapio === drinks*/} 
+              flatlist dos itens do cardapio === drinks 
               <FlatList
                 data={bar.filter((item:any)=> item.categoria_2 === 'drinks')}
                 keyExtractor={(item,index) => `${index}`}
@@ -438,7 +768,7 @@ function Adicionar(props: adicionar_screen) {
                   }}
                   containerStyle={styles.tabaccordion}
                 >
-                {/* flatlist dos itens do cardapio === sucos*/} 
+                flatlist dos itens do cardapio === sucos 
 
                 <FlatList
                   data={bar.filter((item:any)=> item.categoria_2 === 'sucos')}
@@ -484,7 +814,8 @@ function Adicionar(props: adicionar_screen) {
               return  null
             }}
           />
-        </TabView.Item>
+        </TabView.Item> */}
+
       </TabView>
   </SafeAreaView>
   );

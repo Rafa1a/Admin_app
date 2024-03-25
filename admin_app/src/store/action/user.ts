@@ -67,7 +67,7 @@ export const startUsers = () => {
 export const fetchAtualizarUserLimpeza = () => {
   return async (dispatch: any) => {
     try {
-      // Buscar todos os documentos do cardapio
+      // Buscar todos os documentos do user_func
       const usersQuerySnapshot = await getDocs(collection(db, 'user_func'));
       
       // Buscar todos os documentos do pedido
