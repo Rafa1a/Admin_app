@@ -116,64 +116,7 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
                 inputContainerStyle={{backgroundColor: 'white'}}
                 errorMessage={price? 'Para Valores DECIMAIS usar . (ponto) não , (virgula) exemplo : 21.5' : 'Digite um valor valido'}
             />
-            <Divider style={{width:'100%',margin:10}}/>
-            {/* categoria */}
-            <View>
-                <Text style={{fontFamily:'OpenSans-Bold',color:'#fff',fontSize:19}}>Categoria</Text>
-                <View style={{flexDirection:'row',justifyContent:'space-between',margin:10}}>
-                    <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria==='comidas'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria('comidas')}>
-                        <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>comidas</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria==='bebidas'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria('bebidas')}>
-                        <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>bebidas</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria==='bar'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria('bar')}>
-                        <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>bar</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            {/* categoria_2 */}
-            <View>
-                {categoria?<Text style={{fontFamily:'OpenSans-Bold',color:'#fff',fontSize:19}}>Categoria 2</Text>:null}
-                <View style={{flexDirection:'row',justifyContent:'space-between',margin:10}}>
-                    {categoria==='comidas'?
-                    <>
-                        <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria_2==='lanches'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria_2('lanches')}>
-                            <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>lanches</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria_2==='hotdogs'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria_2('hotdogs')}>
-                            <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>hotdogs</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria_2==='porcoes'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria_2('porcoes')}>
-                            <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>porções</Text>
-                        </TouchableOpacity>
-                    </>
-                    :null}
-                    {categoria==='bebidas'?
-                    <>
-                        <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria_2==='no-alcool'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria_2('no-alcool')}>
-                            <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>no-alcool</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria_2==='alcool'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria_2('alcool')}>
-                            <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>alcool</Text>
-                        </TouchableOpacity>
-                    </>
-                    :null}
-                    
-                    {categoria === 'bar'?
-                    <>
-                        <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria_2==='drinks'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria_2('drinks')}>
-                            <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>drinks</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={[{backgroundColor:'#fff',padding:10,marginBottom:10,borderRadius:5},categoria_2==='sucos'?{borderColor:'#E81000',borderWidth:3,}:null]} onPress={() => setCategoria_2('sucos')}>
-                            <Text style={{fontFamily:'OpenSans-Bold',color:'#000',fontSize:19}}>sucos</Text>
-                        </TouchableOpacity>
-                    </>
-                    :null}
-                </View>
-            </View>
+            
             <Divider style={{width:'100%',margin:10}}/>
             {categoria==='comidas' || categoria==='bar'?
             <>
@@ -340,9 +283,6 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
     
                         }
                     }
-                    
-                    
-                    // props.onAdicionar_pedido(item_cardapio)
                 }}
                 containerStyle={{width:'100%'}}
                 color={'#DE6F00'}

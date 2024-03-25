@@ -251,6 +251,22 @@ export const fetchadicionar_cardapio = (item:any) => {
       
     }
   }
+//atualizar item do cardapio
+export const fetchatualizar_cardapio = (id:any,item:any) => {
+    return async (dispatch:any)=>{
+      try{
+        const pedidoRef = doc(db, 'cardapio', id);
+        await updateDoc(pedidoRef, item);
+      }catch (e) {
+        // console.error("Error fetching documents: ", e);
+        dispatch(setMessage({
+          title: 'Error',
+          text: 'Ocorreu um erro ao atualizar item do cardapio'
+        }))
+      }
+      
+    }
+  }
 ///retirar um item do cardapio
 export const fetchretirar_cardapio = (id:any) => {
     return async (dispatch:any)=>{

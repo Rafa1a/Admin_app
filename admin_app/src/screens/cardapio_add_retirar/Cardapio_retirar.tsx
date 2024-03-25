@@ -12,6 +12,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -29,8 +30,19 @@ const Cardapio_retirar = (props: any) => {
                 data={cardapioOrdenado}
                 renderItem={({item}) => (
                     <View style={{flexDirection:'row', justifyContent:'space-evenly',backgroundColor:'#3C4043'}}> 
-                        <Text style={{width:'70%',color:'#fff'}}>{item.name}</Text>
-                        <Button title='Retirar' onPress={() => props.onRetirar_item(item.id)}/>
+                        <Text style={{width:'50%',color:'#fff'}}>{item.name}</Text>
+                        <TouchableOpacity style={{backgroundColor:'#E81000', width:'15%',padding:7}} onPress={() => props.onRetirar_item(item.id)}>
+                            <Text style={{textAlign:'center', color:'#fff'}}>Retirar</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{backgroundColor:'#DE6F00', width:'15%',padding:7}} onPress={()=>props.navigation.navigate('Cardapio_add',{editar:true,id:item.id})}>
+                            <Text style={{textAlign:'center', color:'#fff'}}>Editar</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{backgroundColor:'#0E00E3', width:'16%',padding:7}} onPress={()=>props.navigation.navigate('Versao',{editar:true,id:item.id})}>
+                            <Text style={{textAlign:'center', color:'#fff'}}>Versão</Text>
+                        </TouchableOpacity>
+
                     </View>
                 )}
                 keyExtractor={item => item.id}

@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import Updat from "../screens/Updates";
 import Cardapio_add from "../screens/cardapio_add_retirar/Cardapio_add";
 import Cardapio_retirar from "../screens/cardapio_add_retirar/Cardapio_retirar";
+import Versao from "../screens/cardapio_add_retirar/versao";
 //////////////////////////////////////////////////////////////////////
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator()
@@ -53,6 +54,8 @@ const FeedStack = (props: any) => {
       <Stack.Screen name="Pedido_Adicionar" component={Pedido_itens_adicionar} options={{ headerTintColor: '#F4F7FC', headerStyle: { backgroundColor: "#28292A", }, }} {...props} />
       <Stack.Screen name="Cardapio_add" component={Cardapio_add} options={{ headerTintColor: '#F4F7FC', headerStyle: { backgroundColor: "#28292A", }, }} {...props} />
       <Stack.Screen name="Cardapio_retirar" component={Cardapio_retirar} options={{ headerTintColor: '#F4F7FC', headerStyle: { backgroundColor: "#28292A", }, }} {...props} />
+
+      <Stack.Screen name="Versao" component={Versao} options={{ headerTintColor: '#F4F7FC', headerStyle: { backgroundColor: "#28292A", }, }} {...props} />
 
     </Stack.Navigator>
   );

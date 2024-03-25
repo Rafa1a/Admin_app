@@ -6,8 +6,8 @@ import { Avatar, Button, Icon, ListItem, Tab, TabView } from '@rneui/themed';
 import Estoque_list from '../components/Estoque_list';
 import { cardapio, estoque_screen } from '../interface/inter_cardapio';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Loja_up } from '../store/action/message';
-
+import { Ionicons } from '@expo/vector-icons';
+import { Loja_up } from '../store/action/message_fechado_aberto';
 
 function Estoque(props: estoque_screen) {
   // index da tab 
@@ -224,33 +224,7 @@ function Estoque(props: estoque_screen) {
                     </ListItem.Accordion>
                     )
                   } else  if(item === 'no-alcool'){
-                  
                     return (
-                        
-                    <ListItem.Accordion 
-                      content={
-                        <ListItem.Content >
-                          <ListItem.Title style={styles.title}>Alcoolicas</ListItem.Title>
-                          <ListItem.Subtitle style={styles.subtittle}>Cervejas</ListItem.Subtitle >
-                        </ListItem.Content>
-                      }
-                      isExpanded={expanded}
-                      onPress={() => {
-                        setExpanded(!expanded);
-                        setExpanded2(false)
-                        setExpanded3(false)
-                      }}
-                      containerStyle={styles.tabaccordion}
-                    >
-                      {/* flatlist dos itens do cardapio === alcool*/} 
-                      <FlatList
-                        data={bebidas.filter((item:any)=> item.categoria_2 === 'alcool')}
-                        keyExtractor={(item,index) => `${index}`}
-                        renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item} estoq/>}
-                      />
-                    </ListItem.Accordion>)
-                  }else if(item === 'alcool'){
-                      return (
                       <ListItem.Accordion
                         content={
                           <ListItem.Content>
@@ -280,6 +254,32 @@ function Estoque(props: estoque_screen) {
                         />
                       </ListItem.Accordion>
                       )
+                    
+                  }else if(item === 'alcool'){
+                    return (
+                        
+                      <ListItem.Accordion 
+                        content={
+                          <ListItem.Content >
+                            <ListItem.Title style={styles.title}>Alcoolicas</ListItem.Title>
+                            <ListItem.Subtitle style={styles.subtittle}>Cervejas</ListItem.Subtitle >
+                          </ListItem.Content>
+                        }
+                        isExpanded={expanded}
+                        onPress={() => {
+                          setExpanded(!expanded);
+                          setExpanded2(false)
+                          setExpanded3(false)
+                        }}
+                        containerStyle={styles.tabaccordion}
+                      >
+                        {/* flatlist dos itens do cardapio === alcool*/} 
+                        <FlatList
+                          data={bebidas.filter((item:any)=> item.categoria_2 === 'alcool')}
+                          keyExtractor={(item,index) => `${index}`}
+                          renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item} estoq/>}
+                        />
+                      </ListItem.Accordion>)
                   } else if(item === 'drinks'){
                 
                       return (
@@ -611,7 +611,8 @@ function Estoque(props: estoque_screen) {
           }}
           onPress={() => props.navigation.navigate('Cardapio_retirar')}
         > 
-          <Icon name="remove" color="#2D2F31" size={30} />
+          {/* <Icon name="remove" color="#2D2F31" size={30} /> */}
+          <Ionicons name="construct" size={24} color="#2D2F31" />
         </TouchableOpacity>
       </View>
 

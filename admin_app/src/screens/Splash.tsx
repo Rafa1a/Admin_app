@@ -7,7 +7,7 @@ import { startCardapio } from '../store/action/cardapio';
 import { startPedidosListener } from '../store/action/pedidos';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { startUsers } from '../store/action/user';
-import { startfechado_aberto } from '../store/action/message';
+import { startfechado_aberto } from '../store/action/message_fechado_aberto';
 
 const Splash = ({ navigation, pedidos, cardapio, onFetchPedidos, onFetchCardapio,onFetchUsers,onFechar_aberto }: any) => {
   const [loaded, setLoaded] = useState(false);
