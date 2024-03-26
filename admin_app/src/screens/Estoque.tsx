@@ -8,6 +8,7 @@ import { cardapio, estoque_screen } from '../interface/inter_cardapio';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Loja_up } from '../store/action/message_fechado_aberto';
+import Estoque_list_pai from '../components/Estoque_list_pai';
 
 function Estoque(props: estoque_screen) {
   // index da tab 
@@ -42,9 +43,9 @@ function Estoque(props: estoque_screen) {
   const uniqueCategories = [...new Set(props.cardapio.map((item: any) => item.categoria))];
  
   //separar e filtrar
-  const bebidas = props.cardapio.filter((item:any) =>item.categoria === 'bebidas')
-  const comidas = props.cardapio.filter((item:any) =>item.categoria === 'comidas')
-  const bar = props.cardapio.filter((item:any) =>item.categoria === 'bar')
+  const bebidas = props.cardapio.filter((item:any) =>item.categoria === 'bebidas' && item.versao === undefined ||  item.versao === null )
+  const comidas = props.cardapio.filter((item:any) =>item.categoria === 'comidas'  && item.versao === undefined ||  item.versao === null)
+  const bar = props.cardapio.filter((item:any) =>item.categoria === 'bar'  && item.versao === undefined ||  item.versao === null)
   //categoria do flatlist do ListItem.Accordion
   const categoria_Bebidas = ['no-alcool','alcool']
   const categoria_comidas = ['lanches','hotdogs','porcoes']
@@ -172,7 +173,7 @@ function Estoque(props: estoque_screen) {
                     <FlatList
                       data={comidas.filter((item:any)=> item.categoria_2 === 'lanches')}
                       keyExtractor={(item,index) => `${index}`}
-                      renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                      renderItem={({ item,index }) =>  <Estoque_list_pai onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
                     />
                   </ListItem.Accordion>)
                   }else if(item === 'hotdogs'){
@@ -195,7 +196,7 @@ function Estoque(props: estoque_screen) {
                     <FlatList
                       data={comidas.filter((item:any)=> item.categoria_2 === 'hotdogs')}
                       keyExtractor={(item,index) => `${index}`}
-                      renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                      renderItem={({ item,index }) =>  <Estoque_list_pai onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
                     />
                     </ListItem.Accordion>
                     )
@@ -219,7 +220,7 @@ function Estoque(props: estoque_screen) {
                     <FlatList
                       data={comidas.filter((item:any)=> item.categoria_2 === 'porcoes')}
                       keyExtractor={(item,index) => `${index}`}
-                      renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                      renderItem={({ item,index }) =>  <Estoque_list_pai onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
                     />
                     </ListItem.Accordion>
                     )
@@ -232,10 +233,11 @@ function Estoque(props: estoque_screen) {
                             <ListItem.Subtitle style={styles.subtittle}>Refrigerantes</ListItem.Subtitle>
                           </ListItem.Content>
                         }
-                        isExpanded={expanded2}
+                        
+                        isExpanded={expanded}
                         onPress={() => {
-                          setExpanded2(!expanded2);
-                          setExpanded(false)
+                          setExpanded(!expanded);
+                          setExpanded2(false)
                           setExpanded3(false)
                         }}
                         containerStyle={styles.tabaccordion}
@@ -245,7 +247,7 @@ function Estoque(props: estoque_screen) {
                           data={bebidas.filter((item:any)=> item.categoria_2 === 'no-alcool')}
                           keyExtractor={(item,index) => `${index}`}
                           renderItem={({ item,index }) =>  (
-                          <Estoque_list 
+                          <Estoque_list_pai 
                             onAtualizar_onorof={props.onAtualizar_onorof}
                             onAtualizar_estoque={props.onAtualizar_estoque}
                             {...item} 
@@ -265,10 +267,10 @@ function Estoque(props: estoque_screen) {
                             <ListItem.Subtitle style={styles.subtittle}>Cervejas</ListItem.Subtitle >
                           </ListItem.Content>
                         }
-                        isExpanded={expanded}
+                        isExpanded={expanded2}
                         onPress={() => {
-                          setExpanded(!expanded);
-                          setExpanded2(false)
+                          setExpanded2(!expanded2);
+                          setExpanded(false)
                           setExpanded3(false)
                         }}
                         containerStyle={styles.tabaccordion}
@@ -277,7 +279,7 @@ function Estoque(props: estoque_screen) {
                         <FlatList
                           data={bebidas.filter((item:any)=> item.categoria_2 === 'alcool')}
                           keyExtractor={(item,index) => `${index}`}
-                          renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item} estoq/>}
+                          renderItem={({ item,index }) =>  <Estoque_list_pai onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item} estoq  />}
                         />
                       </ListItem.Accordion>)
                   } else if(item === 'drinks'){
@@ -302,7 +304,7 @@ function Estoque(props: estoque_screen) {
                       <FlatList
                         data={bar.filter((item:any)=> item.categoria_2 === 'drinks')}
                         keyExtractor={(item,index) => `${index}`}
-                        renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                        renderItem={({ item,index }) =>  <Estoque_list_pai onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
                       />
                       </ListItem.Accordion>)
                   }else if(item === 'sucos'){
@@ -327,7 +329,7 @@ function Estoque(props: estoque_screen) {
                         <FlatList
                           data={bar.filter((item:any)=> item.categoria_2 === 'sucos')}
                           keyExtractor={(item,index) => `${index}`}
-                          renderItem={({ item,index }) =>  <Estoque_list onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
+                          renderItem={({ item,index }) =>  <Estoque_list_pai onAtualizar_onorof={props.onAtualizar_onorof} onAtualizar_estoque={props.onAtualizar_estoque}{...item}/>}
                         />
                         </ListItem.Accordion>
                         )

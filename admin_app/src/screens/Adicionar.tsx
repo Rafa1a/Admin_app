@@ -43,9 +43,9 @@ function Adicionar(props: adicionar_screen) {
   const uniqueCategories = [...new Set(props.cardapio.map((item: any) => item.categoria))];
  
   //separar e filtrar
-  const bebidas:any = props.cardapio.filter((item:any) =>item.categoria === 'bebidas' && item.onorof===true)
-  const comidas = props.cardapio.filter((item:any) =>item.categoria === 'comidas' && item.onorof===true)
-  const bar = props.cardapio.filter((item:any) =>item.categoria === 'bar' && item.onorof===true)
+  const bebidas:any = props.cardapio.filter((item:any) =>item.categoria === 'bebidas' && item.onorof===true && item.versao === undefined ||  item.versao === null)
+  const comidas = props.cardapio.filter((item:any) =>item.categoria === 'comidas' && item.onorof===true && item.versao === undefined ||  item.versao === null)
+  const bar = props.cardapio.filter((item:any) =>item.categoria === 'bar' && item.onorof===true && item.versao === undefined ||  item.versao === null)
   //categoria do flatlist do ListItem.Accordion
   const categoria_Bebidas = ['no-alcool','alcool','adicionar']
   const categoria_comidas = ['lanches','hotdogs','porcoes','adicionar']
@@ -122,7 +122,7 @@ function Adicionar(props: adicionar_screen) {
                 keyExtractor={(item,index) => `${index}`}
                 renderItem={({ item,index }) =>  {
                
-                if(item === 'no-alcool'){
+                if(item === 'alcool'){
                   
                 return (
                     
@@ -157,14 +157,14 @@ function Adicionar(props: adicionar_screen) {
                         find.id === item.id 
                       );
                       if(find){
-                      return <Adicionar_list {...item}   trueorfalse={true}/>
+                      return <Adicionar_list {...item}    trueorfalse={true}/>
                       }
                     
-                    return <Adicionar_list {...item}   trueorfalse={false}/>
+                    return <Adicionar_list {...item}    trueorfalse={false}/>
                     }}
                   />
                 </ListItem.Accordion>)
-                }else if(item === 'alcool'){
+                }else if(item === 'no-alcool'){
                   return (
                   <ListItem.Accordion
                     content={
@@ -235,10 +235,10 @@ function Adicionar(props: adicionar_screen) {
                           find.id === item.id 
                         );
                         if(find){
-                        return <Adicionar_list {...item}  adicionar_retirar  trueorfalse={true} />
+                        return <Adicionar_list {...item}    trueorfalse={true} />
                         }
                       
-                      return <Adicionar_list {...item} adicionar_retirar  trueorfalse={false}/>
+                      return <Adicionar_list {...item}   trueorfalse={false}/>
                       }}
                     />
                   </ListItem.Accordion>)
@@ -272,10 +272,10 @@ function Adicionar(props: adicionar_screen) {
                         find.id === item.id 
                       );
                       if(find){
-                      return <Adicionar_list {...item} adicionar_retirar  trueorfalse={true} />
+                      return <Adicionar_list {...item}   trueorfalse={true} />
                       }
                     
-                    return <Adicionar_list {...item} adicionar_retirar  trueorfalse={false}/>
+                    return <Adicionar_list {...item}   trueorfalse={false}/>
                     }}
                   />
                   </ListItem.Accordion>
@@ -310,10 +310,10 @@ function Adicionar(props: adicionar_screen) {
                         find.id === item.id 
                       );
                       if(find){
-                      return <Adicionar_list {...item}  adicionar_retirar trueorfalse={true} />
+                      return <Adicionar_list {...item}   trueorfalse={true} />
                       }
                     
-                    return <Adicionar_list {...item} adicionar_retirar trueorfalse={false}/>
+                    return <Adicionar_list {...item}  trueorfalse={false}/>
                     }}
                   />
                   </ListItem.Accordion>
@@ -593,7 +593,7 @@ function Adicionar(props: adicionar_screen) {
                     return <Adicionar_list {...item}  adicionar_retirar  trueorfalse={true} />
                     }
                   
-                  return <Adicionar_list {...item} adicionar_retirar  trueorfalse={false}/>
+                  return <Adicionar_list {...item}  adicionar_retirar trueorfalse={false}/>
                   }}
                 />
               </ListItem.Accordion>)

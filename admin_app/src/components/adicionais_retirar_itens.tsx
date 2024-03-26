@@ -6,7 +6,7 @@
  */
 
 import { ListItem } from '@rneui/themed';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -23,14 +23,58 @@ import { CheckBox } from '@rneui/themed';
 
 export default (props: any) => {
   const [checkbox2, setCheckbox2] = useState(false);
+  const [objeto, setObjeto] = useState({})
+
+  useEffect(() => {
+    if(props.versoes && props.index_check === props.index){
+      
+        // console.log('aki')
+        setObjeto({
+          id:props.item.id,
+          name_p: props.item.name,
+          categoria: props.item.categoria || '',
+          categoria_2: props.item.categoria_2 || '',
+          quantidade: props.quantity || 1 ,
+          valor_p: props.item.valor
+        })
+      
+    }
+
+    // console.log(objeto)
+  }, [checkbox2,props.quantity])
+  
+  useEffect(() => {
+    if(props.versoes){
+      props.setInicial_state_custom(objeto)
+    }
+  }, [objeto])
+
+  //retirar check box ou adicionar dependendo do index
+  useEffect(() => {
+    // console.log(props.index_check,props.index)
+    if(props.versoes){
+      if(props.index_check === props.index){
+        setCheckbox2(true)
+      } else {
+        setCheckbox2(false)
+      }
+    }
+  }, [props.index_check, props.index])
 
   return (
   <>
     <TouchableOpacity onPress={()=> {
-      setCheckbox2(!checkbox2)
-      
-      props.adicionais?props.handleItemToggleAdicionar(props.item):props.handleItemToggle_retirar(props.item)
-      }}>
+          // console.log('item',props.item)
+          setCheckbox2(!checkbox2)
+
+          props.versoes?props.setIndex_check(props.index):null
+
+          props.adicionais 
+          ? props.handleItemToggleAdicionar(props.item)
+          : props.versoes
+            ? props.setInicial_state_custom(objeto)
+            : props.handleItemToggle_retirar(props.item)
+    }}>
 
       <ListItem 
         containerStyle={{
@@ -42,7 +86,7 @@ export default (props: any) => {
       >
         <ListItem.Content>
           <ListItem.Title >
-            {`${props.adicionais? props.item.name : props.item} ${props.item.valor ? '+ '+props.item.valor : ''}`}
+            {`${props.adicionais || props.versoes? props.item.name : props.item} ${props.versoes?'':props.item.valor ? '+ '+props.item.valor : ''}`}
           </ListItem.Title>
         </ListItem.Content>
         

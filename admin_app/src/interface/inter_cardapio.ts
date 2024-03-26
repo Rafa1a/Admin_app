@@ -38,4 +38,6 @@ export interface estoque_comp {
     id: any;
     onAtualizar_onorof: (id: any, onorof: boolean) => void;
     onAtualizar_estoque: (id: any, estoque: number) => void;
+
+    cardapio?:cardapio[];
 }

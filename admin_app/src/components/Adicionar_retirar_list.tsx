@@ -34,14 +34,14 @@ const adicionar_retirar = (props: adicionar_comp) => {
   
   
   ////////////////controle checkbox////////////////////
-  const [checkbox1, setCheckbox1] = useState(props.trueorfalse);
+  // const [checkbox1, setCheckbox1] = useState(props.trueorfalse);
   // soma de adicionar item 
-  const [add_retirar, setAdd_retirar,] = useState(0);
+  // const [add_retirar, setAdd_retirar,] = useState(0);
 
   ////////////estado inicial de itens COMUM////////////////////
-  const inicial_itens:any = undefined
+  // const inicial_itens:any = undefined
  
-  const [inicial_state_itens, setInicial_state] = useState<Item>(inicial_itens); 
+  // const [inicial_state_itens, setInicial_state] = useState<Item>(inicial_itens); 
   // console.log(inicial_state_itens_custom); 
   // console.log(inicial_state_itens);
   // console.log(checkbox1)   
@@ -51,160 +51,157 @@ const adicionar_retirar = (props: adicionar_comp) => {
 ////////////////////////////////////COMUM/////////////////////////////////////////
 
   // definir estado do componente inicial_state_itens do pedido caso ja exista o item no array TODOS OS ITENS
-  useEffect(() => {
-    if (props.trueorfalse) {
-      const newState = props.adicionar_pedido.find((item: any) => item.id === props.id &&  item.adicionar_p === undefined &&
-      item.retirar_p === undefined );
-      // const newState_custom = props.adicionar_pedido.find((item: any) => item.id === props.id && item.id_iten !== undefined);
-      if (newState) {
-        // console.log(props.adicionar_pedido);
-        setAdd_retirar(newState.quantidade)
-        setInicial_state(newState);
-        // console.log(newState);
-      } 
-      // if(newState_custom) {
-      //   // console.log(props.adicionar_pedido);
-      //   setQuantity(newState_custom.quantidade)
-      //   setInicial_state_custom(newState_custom);
-      //   console.log(newState_custom); 
-      // }
-      return;
-    } 
-  }, []);
+  // useEffect(() => {
+  //   if (props.trueorfalse) {
+  //     const newState = props.adicionar_pedido.find((item: any) => item.id === props.id &&  item.adicionar_p === undefined &&
+  //     item.retirar_p === undefined );
+  //     // const newState_custom = props.adicionar_pedido.find((item: any) => item.id === props.id && item.id_iten !== undefined);
+  //     if (newState) {
+  //       // console.log(props.adicionar_pedido);
+  //       setAdd_retirar(newState.quantidade)
+  //       setInicial_state(newState);
+  //       // console.log(newState);
+  //     } 
+  //     // if(newState_custom) {
+  //     //   // console.log(props.adicionar_pedido);
+  //     //   setQuantity(newState_custom.quantidade)
+  //     //   setInicial_state_custom(newState_custom);
+  //     //   console.log(newState_custom); 
+  //     // }
+  //     return;
+  //   } 
+  // }, []);
   
 //criar estado inicial de item COMUM
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (checkbox1 && props.trueorfalse===false && modalVisible===false) {
-      // console.log('true')
-      const objet:any = {
-              id:props.id,
-              name_p: props.name,
-              categoria: props.categoria || undefined,
-              categoria_2: props.categoria_2 || undefined,
-              quantidade: add_retirar ,
-              valor_p: props.valor,
-            };
-      setInicial_state(objet)      
-      return
-    } else if(props.trueorfalse===false){ 
-      // console.log('false') 
+  //   if (checkbox1 && props.trueorfalse===false && modalVisible===false) {
+  //     // console.log('true')
+  //     const objet:any = {
+  //             id:props.id,
+  //             name_p: props.name,
+  //             categoria: props.categoria || undefined,
+  //             categoria_2: props.categoria_2 || undefined,
+  //             quantidade: add_retirar ,
+  //             valor_p: props.valor,
+  //           };
+  //     setInicial_state(objet)      
+  //     return
+  //   } else if(props.trueorfalse===false){ 
+  //     // console.log('false') 
       
-      setInicial_state(inicial_itens)
-      return   
-    }  
+  //     setInicial_state(inicial_itens)
+  //     return   
+  //   }  
     
-  }, [checkbox1]);
+  // }, [checkbox1]);
 
 
   // ADICIONAR ITEM COMUM
-  useEffect(()=>{
-    if(checkbox1){
-      if (inicial_state_itens !== undefined) {
-        const newArray = [...props.adicionar_pedido, inicial_state_itens];
-        // console.log( 'adicionar :', props.adicionar_pedido)
-        // console.log( props.trueorfalse)
+  // useEffect(()=>{
+  //   if(checkbox1){
+  //     if (inicial_state_itens !== undefined) {
+  //       const newArray = [...props.adicionar_pedido, inicial_state_itens];
+  //       // console.log( 'adicionar :', props.adicionar_pedido)
+  //       // console.log( props.trueorfalse)
 
-        //para nao repitir um item caso ja exista no array
-        props.trueorfalse?null:props.onAdicionar_pedido(newArray);
-      }
-    }
-  },[checkbox1,inicial_state_itens])
-
+  //       //para nao repitir um item caso ja exista no array
+  //       props.trueorfalse?null:props.onAdicionar_pedido(newArray);
+  //     }
+  //   }
+  // },[checkbox1,inicial_state_itens])
   
-
-  //retirar item da propriedade [] itens do pedido ! TODOS OS ITENS DO ID !
-  useEffect(() => {
-      
-    // Retirar item do array
-    if (!checkbox1) {
-      const filteritem = props.adicionar_pedido.filter(
-        (item:any) =>
-          item.id !== props.id  
-      );
-        //atualizar estado inicial
-        const newArray = filteritem;
-        setAdd_retirar(1)
-        setInicial_state(inicial_itens);
-        setQuantity(1)
-        setInicial_state_custom(inicial_itens_custom);
-        props.onAdicionar_pedido(newArray)
-    }
-  }, [checkbox1]);
-
-
   //defenir a quantidade do item especifico do array COMUM
-  useEffect(()=>{
+  // useEffect(()=>{
     
-    if(props.trueorfalse===true){
-      const findIndex = props.adicionar_pedido.findIndex(
-      (item:any) =>
-        item.id === props.id &&
-        item.adicionar_p === undefined &&
-        item.retirar_p === undefined 
+  //   if(props.trueorfalse===true){
+  //     const findIndex = props.adicionar_pedido.findIndex(
+  //     (item:any) =>
+  //       item.id === props.id &&
+  //       item.adicionar_p === undefined &&
+  //       item.retirar_p === undefined 
 
-      );
-      // console.log("addd",add_retirar)
+  //     );
+  //     // console.log("addd",add_retirar)
      
-      //atualizar quantidade
-      if (findIndex !== -1) {
-        const newarray = [...props.adicionar_pedido];
+  //     //atualizar quantidade
+  //     if (findIndex !== -1) {
+  //       const newarray = [...props.adicionar_pedido];
   
-        // Se a quantidade for igual a zero, exclua o item
-         if (add_retirar === 0) {
-          newarray.splice(findIndex, 1);
-        } 
-        else {
-          newarray[findIndex].quantidade = add_retirar;
-          // newarray[findIndex].valor_p = props.valor
-        } 
+  //       // Se a quantidade for igual a zero, exclua o item
+  //        if (add_retirar === 0) {
+  //         newarray.splice(findIndex, 1);
+  //       } 
+  //       else {
+  //         newarray[findIndex].quantidade = add_retirar;
+  //         // newarray[findIndex].valor_p = props.valor
+  //       } 
   
-        props.onAdicionar_pedido(newarray);
-      }  
-      //adicionar item quando ja tem 1 item modal 
-      if (add_retirar > 0 && findIndex === -1) {
-        setAdd_retirar(1)
-        const commonItem = {
-          id:props.id,
-          name_p: props.name,
-          categoria: props.categoria || undefined,
-          categoria_2: props.categoria_2 || undefined,
-          quantidade: add_retirar ,
-          valor_p: props.valor,
-        };
-        props.onAdicionar_pedido([...props.adicionar_pedido, commonItem]);
-      }
+  //       props.onAdicionar_pedido(newarray);
+  //     }  
+  //     //adicionar item quando ja tem 1 item modal 
+  //     if (add_retirar > 0 && findIndex === -1) {
+  //       setAdd_retirar(1)
+  //       const commonItem = {
+  //         id:props.id,
+  //         name_p: props.name,
+  //         categoria: props.categoria || undefined,
+  //         categoria_2: props.categoria_2 || undefined,
+  //         quantidade: add_retirar ,
+  //         valor_p: props.valor,
+  //       };
+  //       props.onAdicionar_pedido([...props.adicionar_pedido, commonItem]);
+  //     }
       
-    }
-    // console.log(inicial_state_itens)
-    // console.log(props.adicionar_pedido)
+  //   }
+  //   // console.log(inicial_state_itens)
+  //   // console.log(props.adicionar_pedido)
     
-  },[add_retirar])
+  // },[add_retirar])
 
 
   //atualizar o checkbox quando nao tiver pedido
-  useEffect(()=>{
-    // console.log(props.adicionar_pedido) 
+  // useEffect(()=>{
+  //   // console.log(props.adicionar_pedido) 
     
-    if(add_retirar === 0 && props.adicionar_pedido.length === 0){
-      setCheckbox1(false)
-    }
-  },[add_retirar,props.adicionar_pedido])
+  //   if(add_retirar === 0 && props.adicionar_pedido.length === 0){
+  //     setCheckbox1(false)
+  //   }
+  // },[add_retirar,props.adicionar_pedido])
 
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+ //retirar item da propriedade [] itens do pedido ! TODOS OS ITENS DO ID !
+//  useEffect(() => {
+      
+//   // Retirar item do array
+//   // if (!checkbox1) {
+//     const filteritem = props.adicionar_pedido.filter(
+//       (item:any) =>
+//         item.id !== props.id  
+//     );
+//       //atualizar estado inicial
+//       const newArray = filteritem;
+//       // setAdd_retirar(1)
+//       // setInicial_state(inicial_itens);
+//       setQuantity(1)
+//       setInicial_state_custom(inicial_itens_custom);
+//       props.onAdicionar_pedido(newArray)
+//   // }
+// }, [quantity]);
 
   //funcao soma quantidade de TODOS
   const Soma = () => {
-
-    // reduce para calcular a soma total das quantidades dos itens
     const somaTotal = props.adicionar_pedido.reduce((soma, item:any) => {
-      // Verifique se o item atende às condições desejadas
-      if (item.id === props.id) {
+      const item_filhos = props.cardapio.filter((item_cardapio:any) => item_cardapio.versao === props.id)
+      
+      if (item.id === props.id || item_filhos.some(filho => filho.id === item.id)) {
         soma += item.quantidade;
       }
       return soma;
-    }, 0); // 0 é o valor inicial da soma
+    }, 0);
 
-  
     return <>{`x${somaTotal || 0}`}</>;
   }
  ///////////////////////////////////CUSTOM//////////////////////////////////////////////
@@ -231,33 +228,39 @@ const adicionar_retirar = (props: adicionar_comp) => {
   },[modalVisible])
 
   // adicionar ITEM CUSTOM ao SALVAR
-  const adicionar_custom_salvar = () => {
+const adicionar_custom_salvar = () => {
+    console.log(inicial_state_itens_custom)
     if (inicial_state_itens_custom !== undefined) {
-      const valorTotalAdicionais = itensSelecionados_adicionar.reduce(
-        (total, item) => total + item.valor,
-        0
-      );
-      // console.log(itensSelecionados_adicionar.map((item) => item.name))
-      // Adicione os itens adicionais e retirados selecionados ao estado inicial_state_itens_custom
-      
-      const newCustom = {
-        ...inicial_state_itens_custom,
-        valor_p:parseFloat(((inicial_state_itens_custom.valor_p + valorTotalAdicionais)).toFixed(2)), 
-        adicionar_p: itensSelecionados_adicionar.map((item) => item.name),
-        retirar_p: itensSelecionados_retirar,
-      };
-      const newArray = [...props.adicionar_pedido, newCustom];
-      props.onAdicionar_pedido(newArray);
-      setInicial_state_custom(inicial_itens_custom);
-      setItensSelecionados_retirar([]); // Limpe os itens selecionados após salvar
-      setItensSelecionados_adicionar([]); // Limpe os itens selecionados após salvar
+        const valorTotalAdicionais = itensSelecionados_adicionar.reduce(
+            (total, item) => total + item.valor,
+            0
+        );
+
+        let newCustom = {
+            ...inicial_state_itens_custom,
+            valor_p: parseFloat(((inicial_state_itens_custom.valor_p + valorTotalAdicionais)).toFixed(2))
+        };
+
+        if (itensSelecionados_adicionar.length > 0) {
+            newCustom.adicionar_p = itensSelecionados_adicionar.map((item) => item.name);
+        }
+
+        if (itensSelecionados_retirar.length > 0) {
+            newCustom.retirar_p = itensSelecionados_retirar;
+        }
+
+        const newArray = [...props.adicionar_pedido, newCustom];
+        props.onAdicionar_pedido(newArray);
+        setInicial_state_custom(inicial_itens_custom);
+        setItensSelecionados_retirar([]); // Limpe os itens selecionados após salvar
+        setItensSelecionados_adicionar([]); // Limpe os itens selecionados após salvar
     }
-    
-  };
+};
 
   
   // adicionar e retirar quantity de CUSTOM MODAL
   const handleIncrement = () => {
+    // console.log('quantity',inicial_state_itens_custom)
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
       setInicial_state_custom((prevCustom) => ({
@@ -298,7 +301,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
 
   const handleItemToggleAdicionar = (item: any) => {
     // Verifique se o item já está na lista de itens selecionados
-
+    // console.log(item)
     if (itensSelecionados_adicionar.includes(item)) {
       setItensSelecionados_adicionar((prev) =>
         prev.filter((selectedItem) => selectedItem !== item)
@@ -310,8 +313,13 @@ const adicionar_retirar = (props: adicionar_comp) => {
   };
 
 // console.log(props.adicionar_pedido); 
+  useEffect(() => {
+    // console.log('inicial',inicial_state_itens_custom)
+    // console.log('inicial',inicial_state_itens_custom)
+    console.log(quantity)
 
-  
+  }, [inicial_state_itens_custom,quantity]);
+  const [index_check, setIndex_check] = useState(0)
   return (
      
     <>
@@ -322,7 +330,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
         margin:10}} 
         bottomDivider
       >
-        <Button  
+        {/* <Button  
           size='md'	
           radius='lg' 
           type='outline'
@@ -337,10 +345,10 @@ const adicionar_retirar = (props: adicionar_comp) => {
           onPress={()=>{
             add_retirar <= 0? setAdd_retirar(0):setAdd_retirar(add_retirar - 1)
           }} 
-        />
+        /> */}
 
         <ListItem.Content style={{alignItems:'center'}}>
-          <ListItem.CheckBox
+          {/* <ListItem.CheckBox
                 checked={checkbox1}
                 onPress={() => {
                   setCheckbox1(prevCheckbox => !prevCheckbox);
@@ -350,11 +358,14 @@ const adicionar_retirar = (props: adicionar_comp) => {
                 uncheckedIcon='check-box-outline-blank'
                 wrapperStyle={{backgroundColor:'#28292a'}}
                 containerStyle={{backgroundColor:'#28292a'}}
-              />
+              /> */}
           <TouchableOpacity 
           style={styles.button} 
-          onPress={() => setCheckbox1(prevCheckbox => !prevCheckbox)}
-          
+          onPress={() => {
+            // setCheckbox1(prevCheckbox => !prevCheckbox)
+            setModalVisible(true)
+            }
+          }
           >
             <ListItem.Title style={styles.title}>
               {props.name}
@@ -362,7 +373,7 @@ const adicionar_retirar = (props: adicionar_comp) => {
             <ListItem.Subtitle style={styles.subtittle}>
               {Soma()}
             </ListItem.Subtitle>
-            {props.adicionar_retirar?<Button  
+            <Button  
                 size='md'	
                 radius='lg' 
                 type='outline'
@@ -375,17 +386,14 @@ const adicionar_retirar = (props: adicionar_comp) => {
                 }}
                 buttonStyle={{borderColor:'tomato',backgroundColor:'#3c4043'}}
                 titleStyle={{color:'white'}}  
-                onPress={()=> {props.adicionar_retirar?
-                  (
-                    (() => {
+                onPress={()=> {
                       setModalVisible(true);
-                      checkbox1?null:setCheckbox1(prevCheckbox => !prevCheckbox)
-                    })()
-                  ):null}} 
-              />:null}
+                  }
+                } 
+              />
           </TouchableOpacity>
         </ListItem.Content>
-        <Button  
+        {/* <Button  
           size='md'	 
           radius='lg' 
           type='outline'
@@ -415,13 +423,9 @@ const adicionar_retirar = (props: adicionar_comp) => {
             }
             
             }}
-        />
+        /> */}
 
       </ListItem>
-
-
- 
-
 
       {/*modal para mudar o valor do estoque*/}
       <Modal
@@ -436,7 +440,18 @@ const adicionar_retirar = (props: adicionar_comp) => {
           <View style={styles.modalView}>
             <Text style={styles.text}>{props.name}</Text>
             <ScrollView style={{ flex: 1, width:'95%'}}>
+              {/* versoes filhos */}
+                <View style={styles.tabaccordion}>
+                  <Text style={styles.text2}>Versões : </Text>
+                  <FlatList
+                    scrollEnabled={false}
+                    data={props.cardapio.filter((item:any)=> item.versao === props.id)}
+                    keyExtractor={(item, index) => `${index}`}
+                    renderItem={({ item, index }) => <Adicionais_itens handleItemToggleAdicionar={handleItemToggleAdicionar} item={item} versoes setInicial_state_custom={setInicial_state_custom} quantity={quantity} setIndex_check={setIndex_check} index={index} index_check={index_check}/>}
+                  />
+                </View>
               {/* ListItem de adicionar e retirar */}
+              {props.adicionais? 
               <ListItem.Accordion
                 content={<Text style={styles.text2}>Adicionar</Text>}
                 isExpanded={expanded}
@@ -446,30 +461,33 @@ const adicionar_retirar = (props: adicionar_comp) => {
                 }}
                 containerStyle={styles.tabaccordion}
               >
-                <FlatList
-                  scrollEnabled={false}
-                  data={props.adicionais}
-                  keyExtractor={(item, index) => `${index}`}
-                  renderItem={({ item, index }) => <Adicionais_itens handleItemToggleAdicionar={handleItemToggleAdicionar} item={item} adicionais/>}
-                />
-              </ListItem.Accordion>
+              <FlatList
+                scrollEnabled={false}
+                data={props.adicionais}
+                keyExtractor={(item, index) => `${index}`}
+                renderItem={({ item, index }) => <Adicionais_itens handleItemToggleAdicionar={handleItemToggleAdicionar} item={item} adicionais/>}
+              />
+            </ListItem.Accordion>:null}
+              {props.ingredientes?
               <ListItem.Accordion
-                content={<Text style={styles.text2}>Retirar</Text>}
-                isExpanded={expanded2}
-                onPress={() => {
-                  setExpanded2(!expanded2);
-                  setExpanded(false);
-                }}
-                containerStyle={styles.tabaccordion}
-              >
-                <FlatList
-                  scrollEnabled={false}
-                  data={props.ingredientes?.filter((item:any)=> item === 'pão'?null:item)}
-                  keyExtractor={(item, index) => `${index}`}
-                  renderItem={({ item, index }) => <Adicionais_itens handleItemToggle_retirar={handleItemToggle_retirar} item={item}  />}
-                />
-              </ListItem.Accordion>
+              content={<Text style={styles.text2}>Retirar</Text>}
+              isExpanded={expanded2}
+              onPress={() => {
+                setExpanded2(!expanded2);
+                setExpanded(false);
+              }}
+              containerStyle={styles.tabaccordion}
+            >
+              <FlatList
+                scrollEnabled={false}
+                data={props.ingredientes?.filter((item:any)=> item === 'pão'?null:item)}
+                keyExtractor={(item, index) => `${index}`}
+                renderItem={({ item, index }) => <Adicionais_itens handleItemToggle_retirar={handleItemToggle_retirar} item={item}  />}
+              />
+            </ListItem.Accordion>:null}
             </ScrollView>
+            {/* ListItem de adicionar e retirar */}
+
             {/* Controle de quantidade */}
             <View style={styles.quantityContainer}>
               <TouchableOpacity
@@ -496,8 +514,8 @@ const adicionar_retirar = (props: adicionar_comp) => {
               <TouchableOpacity style={styles.button} onPress={() => {
                 setModalVisible(false)
                 setInicial_state_custom(inicial_itens_custom)
-                console.log(add_retirar)
-                props.adicionar_pedido.length === 0 ?setCheckbox1(false):null
+                // console.log(add_retirar)
+                // props.adicionar_pedido.length === 0 ?setCheckbox1(false):null
               }}>
                 <Text style={styles.buttonText}>Cancelar</Text>
               </TouchableOpacity>

@@ -312,7 +312,7 @@ import { fetchadicionar_cardapio, fetchatualizar_cardapio, fetchatualizar_cardap
                                 image: url,
                                 onorof:false,
                                 // adicionais:adicionais,
-                                estoque:0,
+                                estoque:1,
                                 curtidas:0,
                                 comments:[]
                             }
