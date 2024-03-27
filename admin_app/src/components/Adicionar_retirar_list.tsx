@@ -311,15 +311,25 @@ const adicionar_custom_salvar = () => {
     }
     // console.log(itensSelecionados_adicionar);
   };
+  //Novo
+  const [index_check, setIndex_check] = useState(0)
 
-// console.log(props.adicionar_pedido); 
+  const [filhoSelecionado, setFilhoSelecionado] = useState(null);
+
+  // console.log(props.adicionar_pedido); 
+  //atualizar filhos selecionados
   useEffect(() => {
     // console.log('inicial',inicial_state_itens_custom)
-    // console.log('inicial',inicial_state_itens_custom)
-    console.log(quantity)
+    // console.log('inicial',inicial_state_itens_custom?.id)
+    // console.log(quantity)
+    // console.log('filhoSelecionado',filhoSelecionado)
 
+    const cardapio_item = props.cardapio.find((item:any) => item.id === inicial_state_itens_custom?.id)
+    if(cardapio_item){
+      setFilhoSelecionado(cardapio_item)
+      // console.log('filhoSelecionado',filhoSelecionado)
+    }
   }, [inicial_state_itens_custom,quantity]);
-  const [index_check, setIndex_check] = useState(0)
   return (
      
     <>
@@ -463,7 +473,7 @@ const adicionar_custom_salvar = () => {
               >
               <FlatList
                 scrollEnabled={false}
-                data={props.adicionais}
+                data={filhoSelecionado?.adicionais}
                 keyExtractor={(item, index) => `${index}`}
                 renderItem={({ item, index }) => <Adicionais_itens handleItemToggleAdicionar={handleItemToggleAdicionar} item={item} adicionais/>}
               />
